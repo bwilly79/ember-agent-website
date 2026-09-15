@@ -141,65 +141,6 @@
   .lp-typing i:nth-child(3){ animation-delay:.4s; }
   @keyframes lpDot{ 0%,60%,100%{opacity:.25;} 30%{opacity:1;} }
 
-  /* PRODUCT PROOF (light 3-card) */
-  .proof{ background:var(--cream-alt); padding:84px 32px; }
-  .proof-head{ max-width:640px; margin:0 auto 52px; text-align:center; }
-  .proof-head h2{ font-size:32px; font-weight:900; margin:14px 0 12px; }
-  .proof-head p{ color:var(--body); font-size:16px; line-height:1.6; }
-  .p-head{ padding:14px 16px; border-bottom:1px solid rgba(0,0,0,.06); display:flex; align-items:center; gap:10px; }
-  .p-avatar{ width:32px; height:32px; border-radius:50%; background:var(--avatar-blue2); color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .p-head .name{ font-size:13.5px; font-weight:700; color:var(--ink); }
-  .p-head .meta{ font-size:11.5px; color:var(--muted); }
-  .p-body{ padding:16px; display:flex; flex-direction:column; gap:10px; flex:1; min-height:180px; }
-  .p-bub{ font-size:13px; line-height:1.5; padding:9px 13px; border-radius:14px; max-width:86%; }
-  .p-bub.agent{ background:var(--green); color:#06240f; align-self:flex-start; border-bottom-left-radius:3px; font-weight:500; }
-  .p-bub.cand{ background:#F1F3F5; color:var(--ink); align-self:flex-end; border-bottom-right-radius:3px; }
-  .p-prefs{ background:#EAF7EF; border:1px solid #BFE6CC; border-radius:10px; padding:10px 12px; font-size:12px; color:#1c5533; align-self:flex-start; max-width:86%; }
-  .p-prefs .t{ font-weight:700; color:#1f7a41; margin-bottom:4px; }
-  .p-panel-row{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--body); padding:5px 0; border-bottom:1px solid rgba(0,0,0,.05); }
-  .p-panel-row b{ color:var(--ink); }
-  .p-panel-row .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); display:inline-block; margin-right:7px; }
-  .p-cand-card{ margin-top:8px; background:#fff; border:1px solid var(--agent-border); border-left:3px solid var(--orange); border-radius:10px; padding:11px 12px; }
-  .p-tag{ font-size:10px; font-weight:600; color:var(--agent-amber); background:var(--agent-amber-bg); padding:3px 10px; border-radius:999px; }
-  .p-cand-card p{ font-size:11.5px; color:var(--body); margin-top:6px; }
-  .p-foot{ padding:16px; border-top:1px solid rgba(0,0,0,.06); }
-  .p-foot .n{ font-size:11px; font-weight:700; color:var(--orange-eyebrow); letter-spacing:.06em; }
-  .p-foot p{ font-size:13px; color:var(--body); margin-top:6px; line-height:1.5; }
-
-  /* UNIFORM CONVERSATION CARDS (illustrated, not real UI screenshots) */
-  .convo-grid5{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; max-width:1080px; margin:0 auto; }
-  .convo-grid2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:700px; margin:22px auto 0; }
-  .c-card{ background:#fff; border:1px solid rgba(0,0,0,.07); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 1px 2px rgba(0,0,0,.03); }
-  .c-head{ padding:14px 16px; border-bottom:1px solid rgba(0,0,0,.06); display:flex; align-items:center; gap:10px; }
-  .c-avatar{ width:34px; height:34px; border-radius:50%; background:var(--avatar-blue2); color:#fff; font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; letter-spacing:.01em; }
-  .c-avatar.orange{ background:var(--orange); }
-  .c-head .c-name{ font-size:13.5px; font-weight:700; color:var(--ink); }
-  .c-head .c-meta{ font-size:11.5px; color:var(--muted); }
-  /* Conversation shots follow the Ember Agent console's bubble system verbatim:
-     candidate white/left 14-14-14-4, agent pink/right 14-14-4-14, notes centered
-     grey pills, warnings centered amber pills, pink = agent-authored only. */
-  .c-context{ margin:14px 16px 0; background:#fff; border:1px solid var(--agent-pink-border); border-left:3px solid var(--agent-pink); border-radius:0 10px 10px 0; padding:10px 12px; font-size:11.5px; color:var(--body); line-height:1.55; }
-  .cw-label{ font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--agent-pink); margin-bottom:4px; }
-  .c-body{ padding:14px 16px; display:flex; flex-direction:column; gap:9px; flex:1; }
-  .c-bub{ font-size:12.5px; line-height:1.48; padding:9px 12px; max-width:86%; }
-  .c-bub.agent{ background:var(--agent-pink-bg); color:var(--ink); align-self:flex-end; border-radius:14px 14px 4px 14px; }
-  .c-bub.cand{ background:#fff; border:1px solid var(--agent-border); color:var(--ink); align-self:flex-start; border-radius:14px 14px 14px 4px; }
-  .c-bub.alert{ background:var(--agent-amber-bg); color:var(--agent-amber); border:1px solid var(--orange-hairline, #f6ddc9); align-self:center; border-radius:999px; font-weight:600; font-size:11.5px; text-align:center; padding:5px 14px; max-width:92%; }
-  .c-pill{ align-self:center; background:var(--agent-neutral); border-radius:999px; padding:5px 14px; font-size:11px; color:var(--body); text-align:center; max-width:92%; }
-  .c-pill b{ color:inherit; }
-  .c-label{ align-self:flex-end; font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--agent-pink); margin:0 4px -3px 0; }
-  .c-avatar.zap{ background:var(--agent-pink-bg); }
-  .c-avatar.zap svg{ width:16px; height:16px; stroke:var(--agent-pink); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
-  .match-list{ align-self:flex-start; max-width:96%; width:100%; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; overflow:hidden; }
-  .match-row{ padding:8px 12px; border-bottom:1px solid rgba(0,0,0,.06); font-size:11px; line-height:1.4; }
-  .match-row:last-child{ border-bottom:none; }
-  .match-row .loc{ font-weight:700; color:var(--ink); }
-  .match-row .meta{ color:var(--muted); margin-top:2px; }
-  .match-row .pay{ color:var(--orange-eyebrow); font-weight:700; }
-  .c-foot{ padding:14px 16px; border-top:1px solid rgba(0,0,0,.06); margin-top:auto; }
-  .c-foot .n{ font-size:11px; font-weight:700; color:var(--orange-eyebrow); letter-spacing:.06em; }
-  .c-foot p{ font-size:12.5px; color:var(--body); margin-top:6px; line-height:1.5; }
-
   /* HOW IT WORKS */
   .how{ padding:84px 32px; text-align:center; }
   .how h2{ font-size:32px; font-weight:900; line-height:1.3; max-width:620px; margin:14px auto 56px; color:var(--ink); }
@@ -270,9 +211,6 @@
   footer .flinks{ margin-top:12px; display:flex; gap:22px; justify-content:center; font-size:13px; color:var(--muted); }
   footer .disclosure{ max-width:520px; margin:20px auto 0; font-size:12px; color:var(--muted); line-height:1.6; }
 
-  @media (max-width:1000px){
-    .convo-grid5{ grid-template-columns:repeat(2,1fr); }
-  }
   @media (max-width: 860px){
     .hero h1{ font-size:38px; }
     .always h2{ font-size:30px; }
@@ -280,7 +218,6 @@
     .always-copy{ text-align:center; }
     .always p.sub{ margin:0 auto; }
     .lp-thread{ height:360px; }
-    .convo-grid5, .convo-grid2{ grid-template-columns:1fr; }
     .how-grid{ grid-template-columns:1fr 1fr; }
     .handoff-grid{ grid-template-columns:1fr; }
   }
@@ -343,100 +280,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4. PRODUCT PROOF -->
-<section class="proof">
-  <div class="wrap">
-    <div class="proof-head reveal">
-      <div class="eyebrow center">Meet your digital employee</div>
-      <h2>Watch Ember work.</h2>
-      <p>Real conversations, redrawn for privacy — the data, dollars and outcomes are exactly what happened. Ember works the database on its own, flags what needs a person, and your team takes it from there.</p>
-    </div>
-    <div class="convo-grid5">
-
-      <div class="c-card reveal">
-        <div class="c-head"><div class="c-avatar">RN</div><div><div class="c-name">MS/Tele Candidate</div><div class="c-meta">2 yrs 3 mo · Compact RN · via Brightline</div></div></div>
-        <div class="c-body">
-          <div class="c-bub cand reveal" style="--d:200ms">Can you prioritize my matches on highest pay for the lowest cost of living? I'm open, and I have a compact license.</div>
-          <div class="c-pill reveal" style="--d:380ms"><b>✓</b> Preferences updated — pay-to-cost-of-living over absolute pay</div>
-          <div class="c-label reveal" style="--d:560ms">Ember</div>
-          <div class="c-bub agent reveal" style="--d:560ms">Based on that, here are your best matches:</div>
-          <div class="match-list reveal" style="--d:740ms">
-            <div class="match-row"><div class="loc">MS/Tele · Mayfield Heights, OH</div><div class="meta"><span class="pay">$2,375/wk</span> · 36 hrs · Nights · starts 9/14</div></div>
-            <div class="match-row"><div class="loc">Tele · Alexandria, LA</div><div class="meta"><span class="pay">$2,304/wk</span> · 36 hrs · Nights · starts ASAP</div></div>
-            <div class="match-row"><div class="loc">MS/Tele · Cleveland, OH</div><div class="meta"><span class="pay">$2,249/wk</span> · 36 hrs · Nights · starts 9/11</div></div>
-          </div>
-          <div class="c-bub agent reveal" style="--d:920ms">Want to be submitted, get more details, or see more roles?</div>
-        </div>
-        <div class="c-foot"><div class="n">01 · THE MATCH</div><p>A candidate asks Ember to optimize for pay against cost of living. Ember re-ranks instantly and shows its work.</p></div>
-      </div>
-
-      <div class="c-card reveal" style="--d:100ms">
-        <div class="c-head"><div class="c-avatar" style="background:var(--avatar-blue);">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">9 yrs 3 mo · CST · via Brightline</div></div></div>
-        <div class="c-body">
-          <div class="c-label reveal" style="--d:300ms">Ember</div>
-          <div class="c-bub agent reveal" style="--d:300ms">Here's what's currently open that fits:</div>
-          <div class="match-list reveal" style="--d:480ms">
-            <div class="match-row"><div class="loc">Surgical Tech · Glenwood Springs, CO</div><div class="meta"><span class="pay">$2,656/wk</span> · 40 hrs · Days · starts 10/6</div></div>
-            <div class="match-row"><div class="loc">Surgical Tech · Vail, CO</div><div class="meta"><span class="pay">$2,310/wk</span> · 36 hrs · Days · starts 9/28</div></div>
-            <div class="match-row"><div class="loc">Surgical Tech · Keene, NH</div><div class="meta"><span class="pay">$2,266/wk</span> · 40 hrs · Days · starts 9/28</div></div>
-          </div>
-          <div class="c-bub cand reveal" style="--d:660ms">I need an early November start.</div>
-          <div class="c-pill reveal" style="--d:840ms"><b>✓</b> Preferences updated — availability 11/1</div>
-        </div>
-        <div class="c-foot"><div class="n">02 · THE UPDATE</div><p>A candidate mentions a new start date in passing. Ember captures it as a preference — no form, no recruiter re-entry.</p></div>
-      </div>
-
-      <div class="c-card reveal" style="--d:200ms">
-        <div class="c-head"><div class="c-avatar zap"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><div class="c-name">What's happening</div><div class="c-meta">All candidates</div></div></div>
-        <div class="p-body" style="min-height:auto; padding:14px 16px;">
-          <div class="p-panel-row reveal" style="--d:400ms"><span><span class="dot"></span>Requires attention</span><b>3</b></div>
-          <div class="p-panel-row reveal" style="--d:520ms"><span><span class="dot" style="background:#adb5bd;"></span>New interest</span><b>12</b></div>
-          <div class="p-panel-row reveal" style="--d:640ms"><span><span class="dot" style="background:#adb5bd;"></span>Active conversations</span><b>28</b></div>
-          <div class="p-panel-row reveal" style="--d:760ms"><span><span class="dot" style="background:#adb5bd;"></span>Upcoming follow-ups</span><b>18</b></div>
-          <div class="p-cand-card reveal" style="--d:940ms">
-            <span class="p-tag">Requires attention</span>
-            <p><b style="color:var(--ink);">ICU Candidate</b><br>Candidate is interested and ready to discuss next steps.</p>
-          </div>
-        </div>
-        <div class="c-foot"><div class="n">03 · HUMAN ATTENTION</div><p>When a candidate is ready or needs a human, Ember surfaces it with the context your team needs.</p></div>
-      </div>
-
-    </div>
-
-    <div class="convo-grid2">
-
-      <div class="c-card reveal">
-        <div class="c-head"><div class="c-avatar" style="background:var(--avatar-blue);">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">Re-engagement · Owner: you</div></div></div>
-        <div class="c-context"><div class="cw-label">What's happening</div>Re-engagement campaign. Candidate needs an early November start — Ember updated his file, sent the two closest matches, then asked whether a facility would flex its 10/19 date.</div>
-        <div class="c-body">
-          <div class="c-bub cand reveal" style="--d:200ms">Will Sitka accept a later start date?</div>
-          <div class="c-label reveal" style="--d:380ms">Ember</div>
-          <div class="c-bub agent reveal" style="--d:380ms">I can't confirm that's flexible. I've passed this to Nathan to check with the facility — he'll text you here by 12:14 this afternoon.</div>
-          <div class="c-bub cand reveal" style="--d:560ms">Perfect</div>
-          <div class="c-bub alert reveal" style="--d:740ms">Nathan hasn't gotten back to you yet, so I've flagged this to leadership. Someone will be in touch shortly.</div>
-        </div>
-        <div class="c-foot"><div class="n">04 · THE ESCALATION</div><p>When a question needs a real answer and the clock runs out, Ember doesn't guess — it escalates and says so.</p></div>
-      </div>
-
-      <div class="c-card reveal" style="--d:100ms">
-        <div class="c-head"><div class="c-avatar">LTC</div><div><div class="c-name">LTC Candidate</div><div class="c-meta">7 yrs 5 mo · LPN, MN · via Brightline</div></div></div>
-        <div class="c-context"><div class="cw-label">What's happening</div>Recruiter enrollment sequence. Ember sent one match and she said yes — then flagged it to her recruiter, Nicole, when Nicole didn't reply in time.</div>
-        <div class="c-body">
-          <div class="c-label reveal" style="--d:300ms">Ember</div>
-          <div class="c-bub agent reveal" style="--d:300ms">Found a match for you:</div>
-          <div class="match-list reveal" style="--d:480ms">
-            <div class="match-row"><div class="loc">LTC · Roseau, MN</div><div class="meta"><span class="pay">$1,518/wk</span> · 32 hrs · 2:30–10:30 PM</div></div>
-          </div>
-          <div class="c-bub agent reveal" style="--d:660ms">Want me to get you submitted?</div>
-          <div class="c-bub cand reveal" style="--d:840ms">Yes</div>
-        </div>
-        <div class="c-foot"><div class="n">05 · THE HANDOFF</div><p>When a candidate says yes, your recruiter gets a submission-ready match with the context already there.</p></div>
-      </div>
-
     </div>
   </div>
 </section>
