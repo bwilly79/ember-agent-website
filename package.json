@@ -1,0 +1,12 @@
+{
+  "name": "ember-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Ember Agent marketing site + Twenty CRM lead endpoint",
+  "scripts": {
+    "start": "node lead-proxy/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

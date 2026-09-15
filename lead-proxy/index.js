@@ -1,7 +1,13 @@
-// Demo-request lead proxy: receives the marketing site's form POST and creates
-// a Company + Person in Ember's Twenty CRM instance. The Twenty API key lives
-// here (Railway env vars), never in the static site.
+// Ember website server: serves the V2 marketing site and receives the demo
+// form's POST, creating a Company + Person in Ember's Twenty CRM instance.
+// The Twenty API key lives here (Railway env vars), never in the page.
 const http = require("http");
+const fs = require("fs");
+const path = require("path");
+
+const SITE_FILE = path.join(__dirname, "..", "v2", "index.html");
+const ASSETS_DIR = path.join(__dirname, "..", "assets");
+const MIME = { ".png": "image/png", ".svg": "image/svg+xml", ".ico": "image/x-icon", ".jpg": "image/jpeg", ".webp": "image/webp" };
 
 const PORT = process.env.PORT || 3000;
 const TWENTY_API_URL = (process.env.TWENTY_API_URL || "").replace(/\/+$/, "");
@@ -74,7 +80,21 @@ const server = http.createServer(async (req, res) => {
     return res.end();
   }
   if (req.method === "GET") {
-    return send(res, 200, cors, { ok: true, configured: configured() });
+    const url = (req.url || "/").split("?")[0];
+    if (url === "/health") {
+      return send(res, 200, cors, { ok: true, configured: configured() });
+    }
+    if (url.startsWith("/assets/")) {
+      const file = path.join(ASSETS_DIR, path.normalize(url.slice("/assets/".length)));
+      if (file.startsWith(ASSETS_DIR) && fs.existsSync(file) && fs.statSync(file).isFile()) {
+        res.writeHead(200, { "Content-Type": MIME[path.extname(file)] || "application/octet-stream", "Cache-Control": "public, max-age=3600" });
+        return fs.createReadStream(file).pipe(res);
+      }
+      return send(res, 404, cors, { ok: false, error: "not found" });
+    }
+    // Everything else gets the site.
+    res.writeHead(200, { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-cache" });
+    return fs.createReadStream(SITE_FILE).pipe(res);
   }
   if (req.method !== "POST" || !req.url.startsWith("/demo-request")) {
     return send(res, 404, cors, { ok: false, error: "not found" });
