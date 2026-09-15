@@ -121,6 +121,24 @@
   .live-pill .dot{ width:7px; height:7px; border-radius:50%; background:#30d158; box-shadow:0 0 8px #30d158; animation:livedot 2.4s ease-in-out infinite; }
   @keyframes livedot{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
 
+  /* Live SMS demo: real fixture conversations replayed on a phone, cycling */
+  .phone-wrap{ max-width:300px; margin:48px auto 0; }
+  .lp-phone{ background:var(--navy-deep); border-radius:40px; padding:12px; box-shadow:0 30px 70px rgba(0,0,0,.45); }
+  .lp-screen{ background:var(--navy-mid); border-radius:30px; overflow:hidden; }
+  .lp-head{ display:flex; flex-direction:column; align-items:center; gap:3px; padding:14px 0 12px; border-bottom:1px solid rgba(176,198,220,.14); }
+  .lp-avatar{ width:38px; height:38px; border-radius:50%; background:var(--avatar-blue); color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center; }
+  .lp-name{ font-size:13px; font-weight:600; color:#fff; }
+  .lp-meta{ font-size:10.5px; color:var(--blue-mute); }
+  .lp-thread{ height:330px; padding:14px 12px; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; overflow:hidden; text-align:left; transition:opacity .4s ease; }
+  .lp-bub{ max-width:86%; padding:8px 12px; border-radius:16px; font-size:12.5px; line-height:1.42; animation:riseIn .3s var(--ease-out) both; }
+  .lp-bub.us{ background:var(--green); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+  .lp-bub.them{ background:var(--candidate-bubble); color:var(--candidate-text); align-self:flex-start; border-bottom-left-radius:4px; }
+  .lp-note{ align-self:center; background:rgba(255,255,255,.08); color:var(--blue-soft); font-size:10.5px; padding:4px 12px; border-radius:999px; text-align:center; max-width:92%; animation:riseIn .3s var(--ease-out) both; }
+  .lp-typing i{ display:inline-block; width:6px; height:6px; border-radius:50%; background:rgba(255,255,255,.65); margin:0 2px; animation:lpDot 1.2s ease-in-out infinite; }
+  .lp-typing i:nth-child(2){ animation-delay:.2s; }
+  .lp-typing i:nth-child(3){ animation-delay:.4s; }
+  @keyframes lpDot{ 0%,60%,100%{opacity:.25;} 30%{opacity:1;} }
+
   /* PRODUCT PROOF (light 3-card) */
   .proof{ background:var(--cream-alt); padding:84px 32px; }
   .proof-head{ max-width:640px; margin:0 auto 52px; text-align:center; }
@@ -305,6 +323,18 @@
       <p class="sub">Every agency has candidates sitting in its database who could become placements. The challenge has always been having enough recruiter time to continuously engage them, consistently respond to every question they have, watch for the right opportunities and act when a match appears.</p>
       <p class="callout">Ember Agent does that work continuously.</p>
       <div><span class="live-pill"><span class="dot"></span>Running · around the clock</span></div>
+    </div>
+    <div class="phone-wrap reveal" style="--d:150ms" id="live-phone">
+      <div class="lp-phone">
+        <div class="lp-screen">
+          <div class="lp-head">
+            <div class="lp-avatar">RN</div>
+            <div class="lp-name">MS/Tele Candidate</div>
+            <div class="lp-meta">via Brightline · SMS</div>
+          </div>
+          <div class="lp-thread"></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -595,6 +625,95 @@
     success.hidden = false;
     success.classList.add('success-pop');
   });
+
+  // Live SMS demo: real conversations from the Ember Agent prototype fixtures,
+  // replayed with typing indicators, cycling one after another.
+  var lp = document.getElementById('live-phone');
+  if (lp) {
+    var lpThread = lp.querySelector('.lp-thread');
+    var lpName = lp.querySelector('.lp-name');
+    var lpAvatar = lp.querySelector('.lp-avatar');
+    var convos = [
+      { name: 'MS/Tele Candidate', avatar: 'RN', msgs: [
+        { k: 'cand', text: 'Can you tell me more about #2 $2645 wk' },
+        { k: 'agent', text: 'Job #37834520, Cleveland Clinic Main Campus: $2645/wk, 3x12 rotating, 20 wks. Needs 18mo MS/Tele exp, BLS/ACLS/NIHSS, Ohio or compact license. Want me to submit you?' },
+        { k: 'cand', text: 'What do I need to get submitted?' },
+        { k: 'agent', text: "You'll need the 18 months of MS/Tele experience, BLS, ACLS, NIHSS, and an Ohio or compact license. Say the word and I'll pass you to Maya to get you submitted." },
+        { k: 'cand', text: 'Great can you let my recruiter know' },
+        { k: 'agent', text: "Got it. I've passed this to Maya at Brightline to review with you. She'll text you here by 10:15 this morning. If anything comes up before then, just ask me." }
+      ]},
+      { name: 'Mother Baby Candidate', avatar: 'RN', msgs: [
+        { k: 'agent', text: 'Just checking in - still looking, or should I hold off for now?' },
+        { k: 'cand', text: 'Still looking' },
+        { k: 'cand', text: 'Are there any mother baby paying over 3000 a week' },
+        { k: 'note', text: 'Preferences updated · pay: $3,000+' },
+        { k: 'agent', text: "Found a match for you: OB/GYN - Machias, Maine: $3,013/wk, 36 hrs/wk, starts 10/12. Interested? Say yes and I'll let your recruiter know." }
+      ]},
+      { name: 'OT Candidate', avatar: 'OT', msgs: [
+        { k: 'cand', text: 'You can definitely take Aurora off the list' },
+        { k: 'note', text: 'Preferences updated · loc: CA, HI, OR, WA' },
+        { k: 'agent', text: "Got it, removed Aurora, CO from your list. Still watching for CA, HI, OR, WA openings and I'll text you as soon as something fits." },
+        { k: 'agent', text: 'Just checking in - still looking, or should I hold off for now?' },
+        { k: 'cand', text: 'i just accepted a position for the school year' },
+        { k: 'agent', text: "Got it. Congratulations on the position. I'll stop sending matches; text me anytime if that changes." }
+      ]}
+    ];
+    var lpMk = function (cls, text) {
+      var d = document.createElement('div');
+      d.className = cls;
+      d.textContent = text;
+      return d;
+    };
+    var lpTyping = function (kind) {
+      var d = document.createElement('div');
+      d.className = 'lp-bub lp-typing ' + (kind === 'agent' ? 'us' : 'them');
+      d.innerHTML = '<i></i><i></i><i></i>';
+      return d;
+    };
+    var lpSetHead = function (c) { lpName.textContent = c.name; lpAvatar.textContent = c.avatar; };
+    var lpDelay = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var lpRun = async function () {
+      var ci = 0;
+      for (;;) {
+        var c = convos[ci];
+        lpSetHead(c);
+        lpThread.style.opacity = '1';
+        for (var i = 0; i < c.msgs.length; i++) {
+          var m = c.msgs[i];
+          await lpDelay(550);
+          if (m.k === 'note') { lpThread.appendChild(lpMk('lp-note', m.text)); continue; }
+          var t = lpTyping(m.k);
+          lpThread.appendChild(t);
+          await lpDelay(Math.min(1900, Math.max(750, m.text.length * 14)));
+          t.remove();
+          lpThread.appendChild(lpMk('lp-bub ' + (m.k === 'agent' ? 'us' : 'them'), m.text));
+        }
+        await lpDelay(3400);
+        lpThread.style.opacity = '0';
+        await lpDelay(450);
+        lpThread.innerHTML = '';
+        ci = (ci + 1) % convos.length;
+      }
+    };
+    var lpStatic = function () {
+      var c = convos[0];
+      lpSetHead(c);
+      c.msgs.forEach(function (m) {
+        lpThread.appendChild(m.k === 'note' ? lpMk('lp-note', m.text) : lpMk('lp-bub ' + (m.k === 'agent' ? 'us' : 'them'), m.text));
+      });
+    };
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      lpStatic();
+    } else {
+      var lpStarted = false;
+      var lpIo = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting && !lpStarted) { lpStarted = true; lpRun(); lpIo.disconnect(); }
+        });
+      }, { threshold: 0.3 });
+      lpIo.observe(lp);
+    }
+  }
 })();
 </script>
 
