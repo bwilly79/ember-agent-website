@@ -120,20 +120,15 @@
   .live-pill{ display:inline-flex; align-items:center; gap:7px; background:rgba(48,209,88,.12); border:1px solid rgba(48,209,88,.3); border-radius:999px; padding:4px 11px 4px 9px; font-size:11.5px; font-weight:600; color:#8fe0a8; margin-top:22px; }
   .live-pill .dot{ width:7px; height:7px; border-radius:50%; background:#30d158; box-shadow:0 0 8px #30d158; animation:livedot 2.4s ease-in-out infinite; }
   @keyframes livedot{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
-  /* The console's own funnel cards (Admin board spec) as the funnel visual —
-     narrowing count-up numbers do the work, no arrows. */
-  .funnel{ display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:9px; max-width:920px; margin:48px auto 0; text-align:left; }
-  .f-card{ background:#fff; border:1px solid var(--agent-border); border-radius:13px; padding:14px 15px; }
-  .f-card .num{ font-family:'Merriweather',serif; font-weight:900; font-size:24px; line-height:1; letter-spacing:-.02em; color:var(--navy); }
-  .f-card .lbl{ font-size:10.5px; margin-top:7px; line-height:1.3; color:var(--muted); }
-  .f-card .sub{ font-size:9.5px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; margin-top:4px; color:var(--muted); }
-  .f-card.goal{ background:var(--navy-mid); border-color:rgba(255,154,77,.5); }
-  .f-card.goal .num{ font-size:30px; color:var(--orange-light); }
-  .f-card.goal .lbl{ color:var(--blue-soft); }
-  .f-card.goal .sub{ color:var(--orange-light); }
-  .f-card.human{ border-color:#f6ddc9; }
-  .f-card.human .num{ color:var(--orange-eyebrow); }
-  .funnel-note{ margin-top:16px; font-size:12.5px; color:var(--blue-mute); text-align:center; }
+  /* The pipeline as a narrowing funnel silhouette: five stacked rows stepping
+     inward, final stage inverted to ember (the payoff step). No icons, no arrows. */
+  .fsteps{ max-width:760px; margin:48px auto 0; display:flex; flex-direction:column; gap:8px; }
+  .fstep{ margin:0 auto; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.13); border-radius:11px; padding:13px 20px; display:flex; align-items:baseline; justify-content:center; gap:12px; }
+  .fstep .n{ font-size:10.5px; font-weight:600; letter-spacing:.1em; color:var(--blue-mute); }
+  .fstep .t{ font-size:14px; font-weight:600; color:#fff; line-height:1.35; }
+  .fstep.payoff{ background:var(--orange); border-color:var(--orange); box-shadow:0 10px 26px rgba(225,111,0,.35); }
+  .fstep.payoff .n{ color:rgba(255,255,255,.75); }
+  .fstep.payoff .t{ color:#fff; }
 
   /* PRODUCT PROOF (light 3-card) */
   .proof{ background:var(--cream-alt); padding:84px 32px; }
@@ -320,14 +315,13 @@
       <p class="callout">Ember Agent does that work continuously.</p>
       <div><span class="live-pill"><span class="dot"></span>Running · around the clock</span></div>
     </div>
-    <div class="funnel">
-      <div class="f-card reveal"><div class="num" data-countup data-to="862">862</div><div class="lbl">In the list</div></div>
-      <div class="f-card reveal" style="--d:100ms"><div class="num" data-countup data-to="146">146</div><div class="lbl">Messaged today</div></div>
-      <div class="f-card reveal" style="--d:200ms"><div class="num" data-countup data-to="39">39</div><div class="lbl">Replied</div></div>
-      <div class="f-card goal reveal" style="--d:300ms"><div class="num" data-countup data-to="11">11</div><div class="lbl">Said submit me</div><div class="sub">The goal</div></div>
-      <div class="f-card human reveal" style="--d:400ms"><div class="num" data-countup data-to="8">8</div><div class="lbl">Needs human attention</div><div class="sub">Waiting or escalated</div></div>
+    <div class="fsteps">
+      <div class="fstep reveal" style="width:100%"><span class="n">01</span><span class="t">Candidate data</span></div>
+      <div class="fstep reveal" style="--d:90ms; width:88%"><span class="n">02</span><span class="t">Healthcare-specific matching</span></div>
+      <div class="fstep reveal" style="--d:180ms; width:76%"><span class="n">03</span><span class="t">Automated engagement</span></div>
+      <div class="fstep reveal" style="--d:270ms; width:64%"><span class="n">04</span><span class="t">Qualified interest</span></div>
+      <div class="fstep payoff reveal" style="--d:360ms; width:52%"><span class="n">05</span><span class="t">Submission-ready candidate</span></div>
     </div>
-    <p class="funnel-note reveal" style="--d:500ms">One re-engagement list, straight from the Ember console. The agent does the volume. Your team gets the last two numbers.</p>
   </div>
 </section>
 
