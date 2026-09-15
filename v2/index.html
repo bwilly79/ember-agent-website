@@ -111,25 +111,27 @@
   /* WHAT EMBER IS (dark diagonal statement band + icon flow) */
   @keyframes emberGlow{ 0%,100%{opacity:.5; transform:scale(1);} 50%{opacity:.85; transform:scale(1.08);} }
   .orb{ position:absolute; border-radius:50%; pointer-events:none; filter:blur(8px); background:radial-gradient(circle, rgba(238,123,0,.4), rgba(235,78,22,.1) 45%, transparent 70%); animation:emberGlow 7s ease-in-out infinite; }
-  .always{ position:relative; overflow:hidden; background:var(--navy); padding:118px 32px 88px; text-align:center; clip-path:polygon(0 44px, 100% 0, 100% 100%, 0 100%); margin-top:-44px; }
+  .always{ position:relative; overflow:hidden; background:var(--navy); padding:118px 32px 88px; clip-path:polygon(0 44px, 100% 0, 100% 100%, 0 100%); margin-top:-44px; }
   .always .wrap{ position:relative; }
-  .always h2{ font-size:40px; line-height:1.18; letter-spacing:-.02em; font-weight:900; color:#fff; margin:14px auto 20px; max-width:760px; }
+  .always-grid{ display:grid; grid-template-columns:minmax(0,1fr) 320px; gap:60px; align-items:center; max-width:1010px; margin:0 auto; }
+  .always-copy{ text-align:left; }
+  .always h2{ font-size:40px; line-height:1.18; letter-spacing:-.02em; font-weight:900; color:#fff; margin:14px 0 20px; }
   .always h2 .yes{ color:var(--orange-light); }
-  .always p.sub{ max-width:600px; margin:0 auto; color:var(--blue-soft); font-size:16px; line-height:1.65; }
+  .always p.sub{ max-width:520px; margin:0; color:var(--blue-soft); font-size:16px; line-height:1.65; }
   .always .callout{ color:var(--orange-light); font-weight:700; font-size:18px; margin-top:18px; font-family:'Merriweather',serif; }
   .live-pill{ display:inline-flex; align-items:center; gap:7px; background:rgba(48,209,88,.12); border:1px solid rgba(48,209,88,.3); border-radius:999px; padding:4px 11px 4px 9px; font-size:11.5px; font-weight:600; color:#8fe0a8; margin-top:22px; }
   .live-pill .dot{ width:7px; height:7px; border-radius:50%; background:#30d158; box-shadow:0 0 8px #30d158; animation:livedot 2.4s ease-in-out infinite; }
   @keyframes livedot{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
 
   /* Live SMS demo: real fixture conversations replayed on a phone, cycling */
-  .phone-wrap{ max-width:300px; margin:48px auto 0; }
+  .phone-wrap{ width:100%; max-width:320px; margin:0; justify-self:center; }
   .lp-phone{ background:var(--navy-deep); border-radius:40px; padding:12px; box-shadow:0 30px 70px rgba(0,0,0,.45); }
   .lp-screen{ background:var(--navy-mid); border-radius:30px; overflow:hidden; }
   .lp-head{ display:flex; flex-direction:column; align-items:center; gap:3px; padding:14px 0 12px; border-bottom:1px solid rgba(176,198,220,.14); }
   .lp-avatar{ width:38px; height:38px; border-radius:50%; background:var(--avatar-blue); color:#fff; font-size:12.5px; font-weight:700; display:flex; align-items:center; justify-content:center; }
   .lp-name{ font-size:13px; font-weight:600; color:#fff; }
   .lp-meta{ font-size:10.5px; color:var(--blue-mute); }
-  .lp-thread{ height:330px; padding:14px 12px; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; overflow:hidden; text-align:left; transition:opacity .4s ease; }
+  .lp-thread{ height:430px; padding:14px 12px; display:flex; flex-direction:column; justify-content:flex-end; gap:8px; overflow:hidden; text-align:left; transition:opacity .4s ease; }
   .lp-bub{ max-width:86%; padding:8px 12px; border-radius:16px; font-size:12.5px; line-height:1.42; animation:riseIn .3s var(--ease-out) both; }
   .lp-bub.us{ background:var(--green); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
   .lp-bub.them{ background:var(--candidate-bubble); color:var(--candidate-text); align-self:flex-start; border-bottom-left-radius:4px; }
@@ -274,6 +276,10 @@
   @media (max-width: 860px){
     .hero h1{ font-size:38px; }
     .always h2{ font-size:30px; }
+    .always-grid{ grid-template-columns:1fr; gap:44px; }
+    .always-copy{ text-align:center; }
+    .always p.sub{ margin:0 auto; }
+    .lp-thread{ height:360px; }
     .convo-grid5, .convo-grid2{ grid-template-columns:1fr; }
     .how-grid{ grid-template-columns:1fr 1fr; }
     .handoff-grid{ grid-template-columns:1fr; }
@@ -317,22 +323,24 @@
 <section class="always" id="meet-ember">
   <div class="orb" style="top:-90px; right:-70px; width:340px; height:340px;"></div>
   <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow on-dark">Always on</div>
-      <h2>A digital employee that <span class="yes">doesn't clock out.</span></h2>
-      <p class="sub">Every agency has candidates sitting in its database who could become placements. The challenge has always been having enough recruiter time to continuously engage them, consistently respond to every question they have, watch for the right opportunities and act when a match appears.</p>
-      <p class="callout">Ember Agent does that work continuously.</p>
-      <div><span class="live-pill"><span class="dot"></span>Running · around the clock</span></div>
-    </div>
-    <div class="phone-wrap reveal" style="--d:150ms" id="live-phone">
-      <div class="lp-phone">
-        <div class="lp-screen">
-          <div class="lp-head">
-            <div class="lp-avatar">RN</div>
-            <div class="lp-name">MS/Tele Candidate</div>
-            <div class="lp-meta">via Brightline · SMS</div>
+    <div class="always-grid">
+      <div class="always-copy reveal">
+        <div class="eyebrow on-dark">Always on</div>
+        <h2>A digital employee that <span class="yes">doesn't clock out.</span></h2>
+        <p class="sub">Every agency has candidates sitting in its database who could become placements. The challenge has always been having enough recruiter time to continuously engage them, consistently respond to every question they have, watch for the right opportunities and act when a match appears.</p>
+        <p class="callout">Ember Agent does that work continuously.</p>
+        <div><span class="live-pill"><span class="dot"></span>Running · around the clock</span></div>
+      </div>
+      <div class="phone-wrap reveal" style="--d:150ms" id="live-phone">
+        <div class="lp-phone">
+          <div class="lp-screen">
+            <div class="lp-head">
+              <div class="lp-avatar">RN</div>
+              <div class="lp-name">MS/Tele Candidate</div>
+              <div class="lp-meta">via Brightline · SMS</div>
+            </div>
+            <div class="lp-thread"></div>
           </div>
-          <div class="lp-thread"></div>
         </div>
       </div>
     </div>
