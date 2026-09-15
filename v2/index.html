@@ -120,14 +120,20 @@
   .live-pill{ display:inline-flex; align-items:center; gap:7px; background:rgba(48,209,88,.12); border:1px solid rgba(48,209,88,.3); border-radius:999px; padding:4px 11px 4px 9px; font-size:11.5px; font-weight:600; color:#8fe0a8; margin-top:22px; }
   .live-pill .dot{ width:7px; height:7px; border-radius:50%; background:#30d158; box-shadow:0 0 8px #30d158; animation:livedot 2.4s ease-in-out infinite; }
   @keyframes livedot{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
-  .flowchain{ display:flex; align-items:flex-start; justify-content:center; max-width:1000px; margin:52px auto 0; flex-wrap:wrap; }
-  .flow-step{ width:170px; display:flex; flex-direction:column; align-items:center; }
-  .flow-step .circ{ width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
-  .flow-step .circ svg{ stroke:var(--orange-light); }
-  .flow-step h4{ font-family:'Inter'; font-size:13.5px; font-weight:600; color:#fff; line-height:1.4; }
-  .flow-arrow{ color:var(--blue-mute); font-size:18px; padding-top:24px; margin:0 4px; }
-  @media (max-width:1080px){ .flow-step{ width:146px; } .flow-step h4{ font-size:12.5px; } }
-  @media (max-width:900px){ .flowchain{ flex-direction:column; align-items:center; gap:2px; } .flow-step{ width:220px; } .flow-arrow{ transform:rotate(90deg); padding-top:0; margin:6px 0 8px; } .js .flow-arrow.reveal{ transform:rotate(90deg) translateX(12px); } .js .flow-arrow.reveal.in{ transform:rotate(90deg); } }
+  /* The console's own funnel cards (Admin board spec) as the funnel visual —
+     narrowing count-up numbers do the work, no arrows. */
+  .funnel{ display:grid; grid-template-columns:repeat(auto-fit,minmax(148px,1fr)); gap:9px; max-width:920px; margin:48px auto 0; text-align:left; }
+  .f-card{ background:#fff; border:1px solid var(--agent-border); border-radius:13px; padding:14px 15px; }
+  .f-card .num{ font-family:'Merriweather',serif; font-weight:900; font-size:24px; line-height:1; letter-spacing:-.02em; color:var(--navy); }
+  .f-card .lbl{ font-size:10.5px; margin-top:7px; line-height:1.3; color:var(--muted); }
+  .f-card .sub{ font-size:9.5px; font-weight:600; text-transform:uppercase; letter-spacing:.1em; margin-top:4px; color:var(--muted); }
+  .f-card.goal{ background:var(--navy-mid); border-color:rgba(255,154,77,.5); }
+  .f-card.goal .num{ font-size:30px; color:var(--orange-light); }
+  .f-card.goal .lbl{ color:var(--blue-soft); }
+  .f-card.goal .sub{ color:var(--orange-light); }
+  .f-card.human{ border-color:#f6ddc9; }
+  .f-card.human .num{ color:var(--orange-eyebrow); }
+  .funnel-note{ margin-top:16px; font-size:12.5px; color:var(--blue-mute); text-align:center; }
 
   /* PRODUCT PROOF (light 3-card) */
   .proof{ background:var(--cream-alt); padding:84px 32px; }
@@ -281,7 +287,6 @@
     .success-pop{ animation:none; }
     .btn, .site-header, .demo-input{ transition:none; }
     .btn:hover{ transform:none; }
-    @media (max-width:900px){ .js .flow-arrow.reveal, .js .flow-arrow.reveal.in{ transform:rotate(90deg); } }
   }
 </style>
 </head>
@@ -315,32 +320,14 @@
       <p class="callout">Ember Agent does that work continuously.</p>
       <div><span class="live-pill"><span class="dot"></span>Running · around the clock</span></div>
     </div>
-    <div class="flowchain">
-      <div class="flow-step reveal">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
-        <h4>Candidate data</h4>
-      </div>
-      <div class="flow-arrow reveal" style="--d:60ms">→</div>
-      <div class="flow-step reveal" style="--d:120ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
-        <h4>Healthcare-specific matching</h4>
-      </div>
-      <div class="flow-arrow reveal" style="--d:180ms">→</div>
-      <div class="flow-step reveal" style="--d:240ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-        <h4>Automated engagement</h4>
-      </div>
-      <div class="flow-arrow reveal" style="--d:300ms">→</div>
-      <div class="flow-step reveal" style="--d:360ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
-        <h4>Qualified interest</h4>
-      </div>
-      <div class="flow-arrow reveal" style="--d:420ms">→</div>
-      <div class="flow-step reveal" style="--d:480ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <h4>Submission-ready candidate</h4>
-      </div>
+    <div class="funnel">
+      <div class="f-card reveal"><div class="num" data-countup data-to="862">862</div><div class="lbl">In the list</div></div>
+      <div class="f-card reveal" style="--d:100ms"><div class="num" data-countup data-to="146">146</div><div class="lbl">Messaged today</div></div>
+      <div class="f-card reveal" style="--d:200ms"><div class="num" data-countup data-to="39">39</div><div class="lbl">Replied</div></div>
+      <div class="f-card goal reveal" style="--d:300ms"><div class="num" data-countup data-to="11">11</div><div class="lbl">Said submit me</div><div class="sub">The goal</div></div>
+      <div class="f-card human reveal" style="--d:400ms"><div class="num" data-countup data-to="8">8</div><div class="lbl">Needs human attention</div><div class="sub">Waiting or escalated</div></div>
     </div>
+    <p class="funnel-note reveal" style="--d:500ms">One re-engagement list, straight from the Ember console. The agent does the volume. Your team gets the last two numbers.</p>
   </div>
 </section>
 
