@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ember Agent — Your New Digital Employee</title>
+<link rel="icon" type="image/png" href="../assets/ember-logo.png">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF9F8;
+    --cream-alt:#F4EEE8;
+    --peach:#FDF3ED;
+    --peach-chip:#FFE8DB;
+    --navy:#0D2238;
+    --navy-deep:#05101D;
+    --navy-mid:#0A1A2D;
+    --ink:#1C2024;
+    --body:#495057;
+    --muted:#868E96;
+    --orange:#E16F00;
+    --orange-dark:#CF6400;
+    --orange-eyebrow:#C15700;
+    --orange-light:#FF9A4D;
+    --green:#34C759;
+    --green-check:#30D158;
+    --candidate-bubble:#1D2F42;
+    --candidate-text:#E9ECEF;
+    --blue-soft:#B0C6DC;
+    --blue-soft2:#DAE4EF;
+    --blue-mute:#7BA3C0;
+    --avatar-blue:#1D4163;
+    --avatar-blue2:#2F5F82;
+    --radius:9px;
+    --ease-out:cubic-bezier(.22,1,.36,1);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  [hidden]{display:none !important;}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter', system-ui, sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{ font-family:'Merriweather', serif; }
+  .wrap{ max-width:1080px; margin:0 auto; padding:0 32px; }
+  a{ text-decoration:none; color:inherit; }
+  .btn{
+    display:inline-block;
+    background:var(--orange);
+    color:#fff;
+    font-weight:600;
+    font-size:14px;
+    padding:13px 26px;
+    border-radius:var(--radius);
+    border:none;
+    cursor:pointer;
+    font-family:'Inter', system-ui, sans-serif;
+    transition:background-color .15s ease-out, box-shadow .15s ease-out, transform .15s ease-out;
+  }
+  .btn:hover{ background:var(--orange-dark); transform:translateY(-1px); }
+  .btn:active{ transform:translateY(0) scale(.985); }
+  .btn:focus-visible{ outline:3px solid rgba(225,111,0,.45); outline-offset:2px; }
+  .btn.outline{ background:transparent; border:1.5px solid rgba(255,255,255,.5); color:#fff; }
+  .eyebrow{ font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--orange-eyebrow); }
+  .eyebrow.on-dark{ color:var(--orange-light); }
+  .eyebrow.center{ text-align:center; }
+  svg.i{ width:22px; height:22px; stroke-width:1.7; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+
+  /* MOTION: keyframes + scroll reveals (hidden only when JS runs; staggered via --d) */
+  @keyframes riseIn{ from{opacity:0; transform:translateY(12px);} to{opacity:1; transform:none;} }
+  .js .reveal{ opacity:0; transform:translateY(12px); }
+  .js .reveal.in{ opacity:1; transform:none; transition:opacity .55s var(--ease-out), transform .55s var(--ease-out); transition-delay:var(--d,0ms); }
+
+  /* HEADER (sticky, gains shadow on scroll) */
+  .site-header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,249,248,.9);
+    backdrop-filter:saturate(180%) blur(12px);
+    -webkit-backdrop-filter:saturate(180%) blur(12px);
+    border-bottom:1px solid transparent;
+    transition:box-shadow .2s ease-out, border-color .2s ease-out;
+  }
+  .site-header.scrolled{ border-bottom-color:#EEE3DA; box-shadow:0 2px 16px rgba(13,34,56,.06); }
+  .header-inner{ display:flex; align-items:center; justify-content:space-between; padding:16px 32px; max-width:1080px; margin:0 auto; }
+  .logo{ display:flex; align-items:center; gap:10px; font-family:'Merriweather', serif; font-weight:700; font-size:19px; color:var(--ink); }
+  .logo img{ width:30px; height:30px; display:block; }
+
+  /* HERO */
+  .hero{ text-align:center; padding:56px 32px 60px; }
+  .hero h1{ font-size:56px; line-height:1.12; font-weight:900; color:var(--ink); max-width:780px; margin:20px auto 0; }
+  .hero h1 .warm{ color:var(--orange); display:block; }
+  .hero p.lead{ max-width:600px; margin:26px auto 0; font-size:18px; line-height:1.6; color:var(--body); }
+  .hero .cta{ margin-top:32px; }
+
+  /* EVOLUTION */
+  .evolution{ padding:80px 32px 70px; }
+  .evolution .head{ text-align:center; max-width:640px; margin:0 auto 52px; }
+  .evolution h2{ font-size:34px; line-height:1.3; font-weight:900; color:var(--ink); margin-top:12px; }
+  .evolution h2 .hi{ color:var(--orange); }
+  .evo-steps{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; max-width:1080px; margin:0 auto; }
+  .evo-card{ background:var(--cream-alt); border:1px solid rgba(0,0,0,.06); border-radius:16px; padding:30px 26px; position:relative; }
+  .evo-card .num{ width:38px; height:38px; border-radius:50%; background:var(--peach-chip); color:var(--orange-eyebrow); font-weight:700; font-size:14px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .evo-card .step-label{ font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .evo-card h3{ font-size:19px; font-weight:700; line-height:1.35; color:var(--ink); margin-bottom:14px; }
+  .evo-card h3 .accent{ color:var(--orange); }
+  .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .pill{ background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:7px; padding:6px 12px; font-size:13px; font-weight:600; color:var(--ink); }
+  .evo-card p.foot{ font-size:14px; color:var(--muted); line-height:1.5; }
+  .evo-card.now{ background:var(--navy); border:none; }
+  .evo-card.now .num{ background:rgba(255,255,255,.12); color:var(--orange-light); }
+  .evo-card.now .step-label{ color:var(--blue-mute); }
+  .evo-card.now h3{ color:#fff; }
+  .evo-card.now p.foot{ color:var(--blue-soft); }
+
+  /* ALWAYS ON (dark, icon flow) */
+  .always{ background:var(--navy); padding:84px 32px; text-align:center; }
+  .always h2{ font-size:34px; font-weight:900; color:#fff; margin:14px auto 16px; max-width:600px; }
+  .always p.sub{ max-width:600px; margin:0 auto; color:var(--blue-soft); font-size:16px; line-height:1.65; }
+  .always .callout{ color:var(--orange-light); font-weight:700; font-size:17px; margin-top:18px; }
+  .flowchain{ display:flex; align-items:flex-start; justify-content:center; max-width:1000px; margin:52px auto 0; flex-wrap:wrap; }
+  .flow-step{ width:170px; display:flex; flex-direction:column; align-items:center; }
+  .flow-step .circ{ width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.14); display:flex; align-items:center; justify-content:center; margin-bottom:14px; }
+  .flow-step .circ svg{ stroke:var(--orange-light); }
+  .flow-step h4{ font-family:'Inter'; font-size:13.5px; font-weight:600; color:#fff; line-height:1.4; }
+  .flow-arrow{ color:var(--blue-mute); font-size:18px; padding-top:24px; margin:0 4px; }
+  @media (max-width:1080px){ .flow-step{ width:146px; } .flow-step h4{ font-size:12.5px; } }
+  @media (max-width:900px){ .flowchain{ flex-direction:column; align-items:center; gap:2px; } .flow-step{ width:220px; } .flow-arrow{ transform:rotate(90deg); padding-top:0; margin:6px 0 8px; } .js .flow-arrow.reveal{ transform:rotate(90deg) translateX(12px); } .js .flow-arrow.reveal.in{ transform:rotate(90deg); } }
+
+  /* PRODUCT PROOF (light 3-card) */
+  .proof{ background:var(--cream-alt); padding:84px 32px; }
+  .proof-head{ max-width:640px; margin:0 auto 52px; text-align:center; }
+  .proof-head h2{ font-size:32px; font-weight:900; margin:14px 0 12px; }
+  .proof-head p{ color:var(--body); font-size:16px; line-height:1.6; }
+  .p-head{ padding:14px 16px; border-bottom:1px solid rgba(0,0,0,.06); display:flex; align-items:center; gap:10px; }
+  .p-avatar{ width:32px; height:32px; border-radius:50%; background:var(--avatar-blue2); color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .p-head .name{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .p-head .meta{ font-size:11.5px; color:var(--muted); }
+  .p-body{ padding:16px; display:flex; flex-direction:column; gap:10px; flex:1; min-height:180px; }
+  .p-bub{ font-size:13px; line-height:1.5; padding:9px 13px; border-radius:14px; max-width:86%; }
+  .p-bub.agent{ background:var(--green); color:#06240f; align-self:flex-start; border-bottom-left-radius:3px; font-weight:500; }
+  .p-bub.cand{ background:#F1F3F5; color:var(--ink); align-self:flex-end; border-bottom-right-radius:3px; }
+  .p-prefs{ background:#EAF7EF; border:1px solid #BFE6CC; border-radius:10px; padding:10px 12px; font-size:12px; color:#1c5533; align-self:flex-start; max-width:86%; }
+  .p-prefs .t{ font-weight:700; color:#1f7a41; margin-bottom:4px; }
+  .p-panel-row{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--body); padding:5px 0; border-bottom:1px solid rgba(0,0,0,.05); }
+  .p-panel-row b{ color:var(--ink); }
+  .p-panel-row .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); display:inline-block; margin-right:7px; }
+  .p-cand-card{ margin-top:8px; background:var(--peach); border:1px solid var(--peach-chip); border-radius:10px; padding:11px 12px; }
+  .p-tag{ font-size:10px; font-weight:700; color:var(--orange-eyebrow); background:var(--peach-chip); padding:3px 8px; border-radius:20px; }
+  .p-cand-card p{ font-size:11.5px; color:var(--body); margin-top:6px; }
+  .p-foot{ padding:16px; border-top:1px solid rgba(0,0,0,.06); }
+  .p-foot .n{ font-size:11px; font-weight:700; color:var(--orange-eyebrow); letter-spacing:.06em; }
+  .p-foot p{ font-size:13px; color:var(--body); margin-top:6px; line-height:1.5; }
+
+  /* UNIFORM CONVERSATION CARDS (illustrated, not real UI screenshots) */
+  .convo-grid5{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; max-width:1080px; margin:0 auto; }
+  .convo-grid2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; max-width:700px; margin:22px auto 0; }
+  .c-card{ background:#fff; border:1px solid rgba(0,0,0,.07); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 1px 2px rgba(0,0,0,.03); }
+  .c-head{ padding:14px 16px; border-bottom:1px solid rgba(0,0,0,.06); display:flex; align-items:center; gap:10px; }
+  .c-avatar{ width:34px; height:34px; border-radius:50%; background:var(--avatar-blue2); color:#fff; font-size:10.5px; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; letter-spacing:.01em; }
+  .c-avatar.orange{ background:var(--orange); }
+  .c-head .c-name{ font-size:13.5px; font-weight:700; color:var(--ink); }
+  .c-head .c-meta{ font-size:11.5px; color:var(--muted); }
+  .c-context{ margin:14px 16px 0; background:var(--peach); border-left:3px solid var(--orange); border-radius:0 8px 8px 0; padding:10px 12px; font-size:11.5px; color:var(--body); line-height:1.55; }
+  .c-body{ padding:14px 16px; display:flex; flex-direction:column; gap:9px; flex:1; }
+  .c-bub{ font-size:12.5px; line-height:1.48; padding:9px 12px; border-radius:13px; max-width:92%; }
+  .c-bub.agent{ background:var(--green); color:#06240f; align-self:flex-start; border-bottom-left-radius:3px; font-weight:500; }
+  .c-bub.cand{ background:#F1F3F5; color:var(--ink); align-self:flex-end; border-bottom-right-radius:3px; }
+  .c-bub.alert{ background:var(--peach-chip); color:#7a3a00; border:1px solid #f3c9a0; align-self:flex-start; border-bottom-left-radius:3px; font-weight:500; }
+  .c-pill{ align-self:flex-start; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:20px; padding:5px 11px; font-size:10.5px; color:var(--body); }
+  .c-pill b{ color:#1f7a41; }
+  .c-label{ align-self:flex-end; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin:0 4px -3px 0; }
+  .match-list{ align-self:flex-start; max-width:96%; width:100%; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; overflow:hidden; }
+  .match-row{ padding:8px 12px; border-bottom:1px solid rgba(0,0,0,.06); font-size:11px; line-height:1.4; }
+  .match-row:last-child{ border-bottom:none; }
+  .match-row .loc{ font-weight:700; color:var(--ink); }
+  .match-row .meta{ color:var(--muted); margin-top:2px; }
+  .match-row .pay{ color:var(--orange-eyebrow); font-weight:700; }
+  .c-foot{ padding:14px 16px; border-top:1px solid rgba(0,0,0,.06); margin-top:auto; }
+  .c-foot .n{ font-size:11px; font-weight:700; color:var(--orange-eyebrow); letter-spacing:.06em; }
+  .c-foot p{ font-size:12.5px; color:var(--body); margin-top:6px; line-height:1.5; }
+
+  /* HOW IT WORKS */
+  .how{ padding:84px 32px; text-align:center; }
+  .how h2{ font-size:32px; font-weight:900; line-height:1.3; max-width:620px; margin:14px auto 56px; color:var(--ink); }
+  .how-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:20px; max-width:1080px; margin:0 auto; text-align:left; }
+  .how-card .num{ width:36px; height:36px; border-radius:50%; background:var(--peach-chip); color:var(--orange-eyebrow); font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .how-card h3{ font-family:'Inter'; font-size:15.5px; font-weight:700; margin-bottom:8px; color:var(--ink); }
+  .how-card p{ font-size:13.5px; color:var(--body); line-height:1.55; }
+
+  /* DATABASE ROI (peach band, with 75% stat) */
+  .roi{ background:var(--peach); padding:76px 32px; text-align:center; }
+  .roi .wrap{ max-width:700px; }
+  .roi h2{ font-size:32px; font-weight:900; margin:14px 0 18px; }
+  .roi .stat-num{ font-family:'Merriweather',serif; font-weight:900; font-size:76px; line-height:1; color:var(--orange); margin-top:34px; }
+  .roi .stat-lbl{ font-size:15px; color:var(--body); max-width:440px; margin:10px auto 30px; line-height:1.5; }
+  .roi p.body-txt{ font-size:16.5px; color:var(--body); line-height:1.7; }
+  .roi .callout{ color:var(--orange); font-weight:700; font-size:19px; margin-top:22px; font-family:'Merriweather',serif; }
+
+  /* USE CASES */
+  .usecases{ padding:84px 32px; text-align:center; }
+  .usecases .eyebrow{ margin-bottom:14px; }
+  .usecases h2{ font-size:32px; font-weight:900; margin-bottom:52px; }
+  .uc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; max-width:1080px; margin:0 auto; text-align:left; }
+  .uc-card{ background:var(--cream-alt); border-radius:16px; padding:30px 26px; }
+  .uc-card .circ{ width:46px; height:46px; border-radius:50%; background:var(--peach-chip); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+  .uc-card .circ svg{ stroke:var(--orange-eyebrow); }
+  .uc-card h3{ font-family:'Inter'; font-size:16px; font-weight:700; margin-bottom:8px; color:var(--ink); }
+  .uc-card p{ font-size:14px; color:var(--body); line-height:1.6; }
+
+  /* ACCURACY STAT */
+  .accuracy{ padding:80px 32px; text-align:center; }
+  .accuracy .wrap{ max-width:620px; }
+  .accuracy h2{ font-size:30px; font-weight:900; margin:14px 0 16px; }
+  .accuracy p.body-txt{ font-size:15.5px; color:var(--body); line-height:1.65; margin-bottom:44px; }
+  .ring{ width:200px; height:200px; border-radius:50%; border:1.5px solid var(--peach-chip); background:var(--peach); display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto; }
+  .ring .num{ font-family:'Merriweather',serif; font-weight:900; font-size:30px; color:var(--orange); }
+  .ring .lbl{ font-size:13px; color:var(--body); margin-top:4px; }
+  .ring .fine{ font-size:11px; color:var(--muted); margin-top:6px; }
+  .ring-row{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; }
+  @media (max-width:560px){ .ring-row{ gap:20px; } .ring{ width:170px; height:170px; } }
+
+  /* HUMAN + AI (dark, reuse handoff-style) */
+  .handoff{ background:var(--navy); padding:84px 32px; }
+  .handoff-grid{ max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .handoff-copy h2{ font-size:32px; font-weight:900; color:#fff; margin:14px 0 18px; line-height:1.3; }
+  .handoff-copy p{ font-size:16px; color:var(--blue-soft); line-height:1.65; max-width:440px; margin-bottom:20px; }
+  .handoff-copy .callout{ color:var(--orange-light); font-weight:700; font-size:17px; }
+  .phone{ background:var(--navy-deep); border-radius:34px; padding:26px 20px; max-width:340px; margin:0 auto; box-shadow:0 30px 60px rgba(0,0,0,.35); }
+  .phone-header{ text-align:center; padding-bottom:16px; }
+  .avatar{ width:44px; height:44px; border-radius:50%; background:var(--avatar-blue); color:#fff; font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; }
+  .phone-header .name{ color:#fff; font-weight:700; font-size:15px; }
+  .phone-header .meta{ color:var(--blue-mute); font-size:12px; margin-top:2px; }
+  .thread{ background:var(--navy-mid); border-radius:20px; padding:18px 16px; display:flex; flex-direction:column; gap:10px; }
+  .bubble{ max-width:82%; padding:10px 14px; border-radius:16px; font-size:14px; line-height:1.45; }
+  .bubble.them{ background:var(--candidate-bubble); color:var(--candidate-text); align-self:flex-start; border-bottom-left-radius:4px; }
+  .bubble.us{ background:var(--green); color:#06240f; align-self:flex-end; border-bottom-right-radius:4px; font-weight:500; }
+  .label-inline{ align-self:flex-end; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--blue-mute); margin:2px 6px -2px 0; }
+
+  /* CONTROL / TRUST */
+  .trust{ padding:84px 32px; text-align:center; }
+  .trust h2{ font-size:32px; font-weight:900; margin:14px 0 48px; }
+  .trust-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; max-width:1080px; margin:0 auto; text-align:left; }
+  .trust-card{ background:var(--cream-alt); border-radius:16px; padding:26px 22px; }
+  .trust-card .circ{ width:40px; height:40px; border-radius:50%; background:var(--peach-chip); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+  .trust-card .circ svg{ width:18px; height:18px; stroke:var(--orange-eyebrow); }
+  .trust-card h3{ font-family:'Inter'; font-size:15px; font-weight:700; margin-bottom:8px; }
+  .trust-card p{ font-size:13.5px; color:var(--body); line-height:1.55; }
+
+  /* FINAL CTA + DEMO FORM */
+  .final{ background:var(--peach); padding:90px 32px; text-align:center; }
+  .final h2{ font-size:34px; font-weight:900; max-width:580px; margin:14px auto 8px; line-height:1.3; }
+  .final .fine{ margin-top:18px; font-size:13px; color:var(--muted); }
+  .demo-form{ display:grid; grid-template-columns:1fr 1fr; gap:14px; max-width:520px; margin:34px auto 0; text-align:left; }
+  .demo-input{
+    background:#fff; border:1px solid rgba(0,0,0,.12); border-radius:10px;
+    padding:14px 16px; font-size:15px; color:var(--ink); font-family:'Inter',sans-serif; outline:none;
+    min-width:0; width:100%;
+    transition:border-color .15s ease-out, box-shadow .15s ease-out;
+  }
+  .demo-input::placeholder{ color:var(--muted); }
+  .demo-input:focus{ border-color:var(--orange); box-shadow:0 0 0 3px rgba(225,111,0,.2); }
+  .demo-input.full, .demo-form .btn{ grid-column:1/3; }
+  .demo-success{ max-width:520px; margin:34px auto 0; background:#fff; border:1px solid var(--peach-chip); border-radius:14px; padding:34px; }
+  .demo-success .check{ width:52px; height:52px; border-radius:50%; background:#EAF7EF; color:#1f7a41; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; margin:0 auto 16px; }
+  .demo-success .t{ font-family:'Merriweather',serif; font-weight:700; font-size:22px; color:var(--ink); margin-bottom:8px; }
+  .demo-success p{ font-size:15px; line-height:1.55; color:var(--body); }
+  .success-pop{ animation:riseIn .3s var(--ease-out) both; }
+
+  footer{ padding:40px 32px; text-align:center; }
+  footer .flinks{ margin-top:12px; display:flex; gap:22px; justify-content:center; font-size:13px; color:var(--muted); }
+  footer .disclosure{ max-width:520px; margin:20px auto 0; font-size:12px; color:var(--muted); line-height:1.6; }
+
+  @media (max-width:1000px){
+    .convo-grid5{ grid-template-columns:repeat(2,1fr); }
+  }
+  @media (max-width: 860px){
+    .hero h1{ font-size:38px; }
+    .evo-steps{ grid-template-columns:1fr; }
+    .convo-grid5, .convo-grid2{ grid-template-columns:1fr; }
+    .how-grid{ grid-template-columns:1fr 1fr; }
+    .uc-grid, .trust-grid{ grid-template-columns:1fr 1fr; }
+    .handoff-grid{ grid-template-columns:1fr; }
+  }
+  @media (max-width:560px){
+    .how-grid, .uc-grid, .trust-grid{ grid-template-columns:1fr; }
+    .demo-form{ grid-template-columns:1fr; }
+    .demo-input.full, .demo-form .btn{ grid-column:auto; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .js .reveal, .js .reveal.in{ opacity:1; transform:none; transition:none; }
+    .success-pop{ animation:none; }
+    .btn, .site-header, .demo-input{ transition:none; }
+    .btn:hover{ transform:none; }
+    @media (max-width:900px){ .js .flow-arrow.reveal, .js .flow-arrow.reveal.in{ transform:rotate(90deg); } }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo" href="#"><img src="../assets/ember-logo.png" alt="Ember">Ember</a>
+    <a href="#demo" class="btn">Book a demo</a>
+  </div>
+</header>
+
+<!-- 1. HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="eyebrow reveal">Ember Hiring presents</div>
+    <h1 class="reveal" style="--d:70ms">Ember Agent.<span class="warm">Your New Digital Employee.</span></h1>
+    <p class="lead reveal" style="--d:140ms">An always-on recruiting agent built to continuously work your database — keeping candidates engaged, matching them to opportunities and surfacing submission-ready talent to your team.</p>
+    <div class="cta reveal" style="--d:210ms"><a href="#evolution" class="btn">Meet Your Ember Agent →</a></div>
+  </div>
+</section>
+
+<!-- 2. EVOLUTION -->
+<section class="evolution" id="evolution">
+  <div class="wrap">
+    <div class="head reveal">
+      <div class="eyebrow">The evolution</div>
+      <h2>Ember didn't start as an agent. <span class="hi">It started as data.</span></h2>
+    </div>
+    <div class="evo-steps">
+      <div class="evo-card reveal">
+        <div class="num">01</div>
+        <div class="step-label">Step one</div>
+        <h3>First, we taught Ember to <span class="accent">understand your data.</span></h3>
+        <div class="pill-row">
+          <span class="pill">Candidate preferences</span>
+          <span class="pill">Availability</span>
+          <span class="pill">Location</span>
+          <span class="pill">Pay</span>
+          <span class="pill">Shift</span>
+        </div>
+        <p class="foot">The information needed to drive placements.</p>
+      </div>
+      <div class="evo-card reveal" style="--d:100ms">
+        <div class="num">02</div>
+        <div class="step-label">Step two</div>
+        <h3>Then, we taught Ember to find the <span class="accent">right match.</span></h3>
+        <div class="pill-row">
+          <span class="pill">Healthcare-specific AI</span>
+          <span class="pill">Candidate + job</span>
+        </div>
+        <p class="foot">The right opportunity at the right time.</p>
+      </div>
+      <div class="evo-card now reveal" style="--d:200ms">
+        <div class="num">03</div>
+        <div class="step-label">Step three</div>
+        <h3>Now, we're <span style="color:var(--orange-light)">putting it to work.</span></h3>
+        <p class="foot">Meet Ember Agent. The intelligence Ember built over the last 15 months now has a job to do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. ALWAYS ON -->
+<section class="always">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow on-dark">Always on</div>
+      <h2>Your database doesn't clock out.</h2>
+      <p class="sub">Every agency has candidates sitting in its database who could become placements. The challenge has always been having enough recruiter time to continuously engage them, watch for the right opportunities and act when a match appears.</p>
+      <p class="callout">Ember Agent does that work continuously.</p>
+    </div>
+    <div class="flowchain">
+      <div class="flow-step reveal">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5"/><path d="M3 12a9 3 0 0 0 18 0"/></svg></div>
+        <h4>Candidate data</h4>
+      </div>
+      <div class="flow-arrow reveal" style="--d:60ms">→</div>
+      <div class="flow-step reveal" style="--d:120ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <h4>Healthcare-specific matching</h4>
+      </div>
+      <div class="flow-arrow reveal" style="--d:180ms">→</div>
+      <div class="flow-step reveal" style="--d:240ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
+        <h4>Automated engagement</h4>
+      </div>
+      <div class="flow-arrow reveal" style="--d:300ms">→</div>
+      <div class="flow-step reveal" style="--d:360ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
+        <h4>Qualified interest</h4>
+      </div>
+      <div class="flow-arrow reveal" style="--d:420ms">→</div>
+      <div class="flow-step reveal" style="--d:480ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h4>Submission-ready candidate</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PRODUCT PROOF -->
+<section class="proof">
+  <div class="wrap">
+    <div class="proof-head reveal">
+      <div class="eyebrow center">Meet your digital employee</div>
+      <h2>Watch Ember work.</h2>
+      <p>Real conversations, redrawn for privacy — the data, dollars and outcomes are exactly what happened. Ember works the database on its own, flags what needs a person, and your team takes it from there.</p>
+    </div>
+    <div class="convo-grid5">
+
+      <div class="c-card reveal">
+        <div class="c-head"><div class="c-avatar">RN</div><div><div class="c-name">MS/Tele Candidate</div><div class="c-meta">2 yrs 3 mo · Compact RN · via Brightline</div></div></div>
+        <div class="c-body">
+          <div class="c-bub cand reveal" style="--d:200ms">Can you prioritize my matches on highest pay for the lowest cost of living? I'm open, and I have a compact license.</div>
+          <div class="c-pill reveal" style="--d:380ms"><b>✓</b> Preferences updated — pay-to-cost-of-living over absolute pay</div>
+          <div class="c-bub agent reveal" style="--d:560ms">Based on that, here are your best matches:</div>
+          <div class="match-list reveal" style="--d:740ms">
+            <div class="match-row"><div class="loc">MS/Tele · Mayfield Heights, OH</div><div class="meta"><span class="pay">$2,375/wk</span> · 36 hrs · Nights · starts 9/14</div></div>
+            <div class="match-row"><div class="loc">Tele · Alexandria, LA</div><div class="meta"><span class="pay">$2,304/wk</span> · 36 hrs · Nights · starts ASAP</div></div>
+            <div class="match-row"><div class="loc">MS/Tele · Cleveland, OH</div><div class="meta"><span class="pay">$2,249/wk</span> · 36 hrs · Nights · starts 9/11</div></div>
+          </div>
+          <div class="c-bub agent reveal" style="--d:920ms">Want to be submitted, get more details, or see more roles?</div>
+        </div>
+        <div class="c-foot"><div class="n">01 · THE MATCH</div><p>A candidate asks Ember to optimize for pay against cost of living. Ember re-ranks instantly and shows its work.</p></div>
+      </div>
+
+      <div class="c-card reveal" style="--d:100ms">
+        <div class="c-head"><div class="c-avatar orange">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">9 yrs 3 mo · CST · via Brightline</div></div></div>
+        <div class="c-body">
+          <div class="c-bub agent reveal" style="--d:300ms">Here's what's currently open that fits:</div>
+          <div class="match-list reveal" style="--d:480ms">
+            <div class="match-row"><div class="loc">Surgical Tech · Glenwood Springs, CO</div><div class="meta"><span class="pay">$2,656/wk</span> · 40 hrs · Days · starts 10/6</div></div>
+            <div class="match-row"><div class="loc">Surgical Tech · Vail, CO</div><div class="meta"><span class="pay">$2,310/wk</span> · 36 hrs · Days · starts 9/28</div></div>
+            <div class="match-row"><div class="loc">Surgical Tech · Keene, NH</div><div class="meta"><span class="pay">$2,266/wk</span> · 40 hrs · Days · starts 9/28</div></div>
+          </div>
+          <div class="c-bub cand reveal" style="--d:660ms">I need an early November start.</div>
+          <div class="c-pill reveal" style="--d:840ms"><b>✓</b> Preferences updated — availability 11/1</div>
+        </div>
+        <div class="c-foot"><div class="n">02 · THE UPDATE</div><p>A candidate mentions a new start date in passing. Ember captures it as a preference — no form, no recruiter re-entry.</p></div>
+      </div>
+
+      <div class="c-card reveal" style="--d:200ms">
+        <div class="c-head"><div class="c-avatar" style="background:var(--orange);">⚡</div><div><div class="c-name">What's happening</div><div class="c-meta">All candidates</div></div></div>
+        <div class="p-body" style="min-height:auto; padding:14px 16px;">
+          <div class="p-panel-row reveal" style="--d:400ms"><span><span class="dot"></span>Requires attention</span><b>3</b></div>
+          <div class="p-panel-row reveal" style="--d:520ms"><span><span class="dot" style="background:#adb5bd;"></span>New interest</span><b>12</b></div>
+          <div class="p-panel-row reveal" style="--d:640ms"><span><span class="dot" style="background:#adb5bd;"></span>Active conversations</span><b>28</b></div>
+          <div class="p-panel-row reveal" style="--d:760ms"><span><span class="dot" style="background:#adb5bd;"></span>Upcoming follow-ups</span><b>18</b></div>
+          <div class="p-cand-card reveal" style="--d:940ms">
+            <span class="p-tag">Requires attention</span>
+            <p><b style="color:var(--ink);">ICU Candidate</b><br>Candidate is interested and ready to discuss next steps.</p>
+          </div>
+        </div>
+        <div class="c-foot"><div class="n">03 · HUMAN ATTENTION</div><p>When a candidate is ready or needs a human, Ember surfaces it with the context your team needs.</p></div>
+      </div>
+
+    </div>
+
+    <div class="convo-grid2">
+
+      <div class="c-card reveal">
+        <div class="c-head"><div class="c-avatar orange">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">Re-engagement · Owner: you</div></div></div>
+        <div class="c-context">Re-engagement campaign. Candidate needs an early November start — Ember updated his file, sent the two closest matches, then asked whether a facility would flex its 10/19 date.</div>
+        <div class="c-body">
+          <div class="c-bub cand reveal" style="--d:200ms">Will Sitka accept a later start date?</div>
+          <div class="c-bub agent reveal" style="--d:380ms">I can't confirm that's flexible. I've passed this to Nathan to check with the facility — he'll text you here by 12:14 this afternoon.</div>
+          <div class="c-bub cand reveal" style="--d:560ms">Perfect</div>
+          <div class="c-bub alert reveal" style="--d:740ms">Nathan hasn't gotten back to you yet, so I've flagged this to leadership. Someone will be in touch shortly.</div>
+        </div>
+        <div class="c-foot"><div class="n">04 · THE ESCALATION</div><p>When a question needs a real answer and the clock runs out, Ember doesn't guess — it escalates and says so.</p></div>
+      </div>
+
+      <div class="c-card reveal" style="--d:100ms">
+        <div class="c-head"><div class="c-avatar">LTC</div><div><div class="c-name">LTC Candidate</div><div class="c-meta">7 yrs 5 mo · LPN, MN · via Brightline</div></div></div>
+        <div class="c-context">Recruiter enrollment sequence. Ember sent one match and she said yes — then flagged it to her recruiter, Nicole, when Nicole didn't reply in time.</div>
+        <div class="c-body">
+          <div class="c-bub agent reveal" style="--d:300ms">Found a match for you:</div>
+          <div class="match-list reveal" style="--d:480ms">
+            <div class="match-row"><div class="loc">LTC · Roseau, MN</div><div class="meta"><span class="pay">$1,518/wk</span> · 32 hrs · 2:30–10:30 PM</div></div>
+          </div>
+          <div class="c-bub agent reveal" style="--d:660ms">Want me to get you submitted?</div>
+          <div class="c-bub cand reveal" style="--d:840ms">Yes</div>
+        </div>
+        <div class="c-foot"><div class="n">05 · THE HANDOFF</div><p>When a candidate says yes, your recruiter gets a submission-ready match with the context already there.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 5. HOW IT WORKS -->
+<section class="how">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">How Ember Agent works</div>
+      <h2>From database to submission-ready.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-card reveal">
+        <div class="num">01</div>
+        <h3>Understand</h3>
+        <p>Ember uses candidate data and conversation intelligence to understand what each candidate is actually looking for.</p>
+      </div>
+      <div class="how-card reveal" style="--d:80ms">
+        <div class="num">02</div>
+        <h3>Match</h3>
+        <p>Healthcare-specific AI continuously identifies relevant opportunities.</p>
+      </div>
+      <div class="how-card reveal" style="--d:160ms">
+        <div class="num">03</div>
+        <h3>Engage</h3>
+        <p>When a relevant opportunity appears, Ember starts and manages the candidate conversation.</p>
+      </div>
+      <div class="how-card reveal" style="--d:240ms">
+        <div class="num">04</div>
+        <h3>Qualify</h3>
+        <p>Ember learns from the conversation, updates matching preferences and identifies real interest.</p>
+      </div>
+      <div class="how-card reveal" style="--d:320ms">
+        <div class="num">05</div>
+        <h3>Surface</h3>
+        <p>When a candidate is ready for the next step, your team gets a qualified, context-rich opportunity to act on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. DATABASE ROI -->
+<section class="roi">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Your biggest asset is already in your ATS</div>
+      <h2>Put your database back to work.</h2>
+    </div>
+    <div class="reveal" style="--d:100ms">
+      <div class="stat-num" data-countup data-to="75" data-suffix="%">75%</div>
+      <div class="stat-lbl">of candidates take a different job than the one they applied for. They're always talking to someone — the question is whether it's you.</div>
+    </div>
+    <p class="body-txt reveal" style="--d:170ms">You've already paid to acquire the candidates in your database. But most agencies don't have enough recruiter capacity to continuously re-engage every candidate, monitor every new job and act on every relevant match. Ember Agent changes that — it continuously works the database you already own, helping turn dormant relationships into new submission opportunities.</p>
+    <p class="callout reveal" style="--d:240ms">More value from the candidates you've already paid for.</p>
+  </div>
+</section>
+
+<!-- 7. USE CASES -->
+<section class="usecases">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">One agent. Always working.</div>
+      <h2>Three ways Ember puts your database to work.</h2>
+    </div>
+    <div class="uc-grid">
+      <div class="uc-card reveal">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <h3>Re-engage dormant candidates</h3>
+        <p>Reconnect with candidates already in your database when relevant opportunities appear.</p>
+      </div>
+      <div class="uc-card reveal" style="--d:80ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <h3>Work new applicants faster</h3>
+        <p>Start engaging new candidates while interest is fresh.</p>
+      </div>
+      <div class="uc-card reveal" style="--d:160ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <h3>Continuously act on job matches</h3>
+        <p>When the right job appears for the right candidate, Ember moves the conversation forward without waiting for a recruiter to notice it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. ACCURACY -->
+<section class="accuracy">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Built for healthcare staffing</div>
+      <h2>Accuracy matters when every match is different.</h2>
+      <p class="body-txt">Generic AI doesn't understand the nuance of healthcare staffing — or reliably understand what a candidate is actually telling you. Ember was built and trained around the data and context that actually drive placements: specialty, licensing, shift, location, pay, availability, and real conversation.</p>
+    </div>
+    <div class="ring-row">
+      <div class="ring reveal" style="--d:100ms">
+        <div class="num" data-countup data-to="99" data-prefix="Up to " data-suffix="%">Up to 99%</div>
+        <div class="lbl">matching accuracy</div>
+        <div class="fine">Based on internal testing</div>
+      </div>
+      <div class="ring reveal" style="--d:200ms">
+        <div class="num" data-countup data-to="95" data-suffix="%">95%</div>
+        <div class="lbl">conversation accuracy</div>
+        <div class="fine">Correctly interprets what candidates mean</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. HUMAN + AI -->
+<section class="handoff">
+  <div class="handoff-grid">
+    <div class="handoff-copy reveal">
+      <div class="eyebrow on-dark">Humans + AI</div>
+      <h2>Ember knows what belongs with your team.</h2>
+      <p>Ember handles the repeatable recruiting work at scale. When a candidate is ready for a submission, needs human judgment, or reaches a point where a recruiter should step in, Ember surfaces the conversation with the context your team needs — right in the same thread, no group text required.</p>
+      <p class="callout">AI handles the volume. Your team handles the moments that matter.</p>
+    </div>
+    <div class="phone reveal" style="--d:150ms">
+      <div class="phone-header">
+        <div class="avatar">EC</div>
+        <div class="name">Enrolled Candidate</div>
+        <div class="meta">via Brightline Staffing · SMS</div>
+      </div>
+      <div class="thread">
+        <div class="bubble them reveal" style="--d:350ms">Great — can you let my recruiter know?</div>
+        <div class="bubble us reveal" style="--d:550ms">Got it. I've passed this to Maya to review with you. She'll text you here by 10:15 this morning. If anything comes up before then, just ask me.</div>
+        <div class="label-inline reveal" style="--d:750ms">Maya here.</div>
+        <div class="bubble us reveal" style="--d:750ms">I've got you from here. I'll text you from my own number in a minute — watch for a message from me.</div>
+        <div class="label-inline reveal" style="--d:950ms">Ember here.</div>
+        <div class="bubble us reveal" style="--d:950ms">Maya passed you back to me while they get your submission to Cleveland Clinic Main Campus in. I'll keep matches coming. Say the word if you'd rather I hold off.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. CONTROL -->
+<section class="trust">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow">Your team is still in control</div>
+      <h2>Your digital employee works for you.</h2>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card reveal">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div>
+        <h3>You control who Ember works with</h3>
+        <p>Your team determines which candidates and lists the Agent can engage.</p>
+      </div>
+      <div class="trust-card reveal" style="--d:70ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
+        <h3>You can see the work</h3>
+        <p>Get visibility into every conversation and what's happening with each candidate.</p>
+      </div>
+      <div class="trust-card reveal" style="--d:140ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
+        <h3>Humans can step in</h3>
+        <p>When judgment or a human relationship is needed, your team takes over — right in the thread.</p>
+      </div>
+      <div class="trust-card reveal" style="--d:210ms">
+        <div class="circ"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="10" y1="9" x2="10" y2="15"/><line x1="14" y1="9" x2="14" y2="15"/></svg></div>
+        <h3>You can stop it</h3>
+        <p>Your team retains full control over Agent activity, any time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. FINAL CTA + DEMO FORM -->
+<section class="final" id="demo">
+  <div class="wrap">
+    <div class="eyebrow reveal">From software to workforce</div>
+    <h2 class="reveal" style="--d:70ms">Your database already has the talent. Ember Agent puts it to work.</h2>
+    <form id="demo-form" class="demo-form reveal" style="--d:140ms">
+      <input required name="agency" placeholder="Agency name" class="demo-input full">
+      <input required name="name" placeholder="Your name" class="demo-input">
+      <input required type="email" name="email" placeholder="Work email" class="demo-input">
+      <button type="submit" class="btn" style="font-size:16px; padding:16px;">Meet Your New Digital Employee →</button>
+    </form>
+    <div id="demo-success" hidden class="demo-success">
+      <div class="check">✓</div>
+      <div class="t">You're on the calendar path.</div>
+      <p>We'll reach out within one business day to lock in a time. Talk soon.</p>
+    </div>
+    <div class="fine reveal" style="--d:210ms">No obligation. We'll never contact your candidates without your say-so.</div>
+  </div>
+</section>
+
+<!-- 12. FOOTER -->
+<footer>
+  <div class="logo" style="justify-content:center;"><img src="../assets/ember-logo.png" alt="Ember">Ember</div>
+  <div style="font-size:13px;color:var(--muted);margin-top:6px;">Built for healthcare staffing.</div>
+  <div class="flinks">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Service</a>
+    <a href="#">Messaging Consent &amp; Disclosure</a>
+  </div>
+  <div class="disclosure">SMS/messaging consent and disclosure language will be added here once Twilio registration completes.</div>
+</footer>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Scroll reveals
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(function (el) { io.observe(el); });
+  }
+
+  // Count-up stats
+  var statEls = Array.prototype.slice.call(document.querySelectorAll('[data-countup]'));
+  var runCount = function (el) {
+    var to = parseFloat(el.dataset.to);
+    var suf = el.dataset.suffix || '';
+    var pre = el.dataset.prefix || '';
+    var dur = 1300, start = performance.now();
+    var tick = function (now) {
+      var p = Math.min(1, (now - start) / dur);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = pre + Math.round(to * eased) + suf;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if (!reduceMotion && 'IntersectionObserver' in window && statEls.length) {
+    var statIo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { runCount(e.target); statIo.unobserve(e.target); }
+      });
+    }, { threshold: 0.4 });
+    statEls.forEach(function (el) { statIo.observe(el); });
+  }
+
+  // Header shadow after scroll
+  var header = document.querySelector('.site-header');
+  var onScroll = function () { header.classList.toggle('scrolled', window.scrollY > 40); };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // Demo form -> success
+  var form = document.getElementById('demo-form');
+  var success = document.getElementById('demo-success');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.hidden = true;
+    success.hidden = false;
+    success.classList.add('success-pop');
+  });
+})();
+</script>
+
+</body>
+</html>
