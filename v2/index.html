@@ -170,23 +170,6 @@
   .ring-row{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; }
   @media (max-width:560px){ .ring-row{ gap:20px; } .ring{ width:170px; height:170px; } }
 
-  /* HUMAN + AI (dark, reuse handoff-style) */
-  .handoff{ position:relative; overflow:hidden; background:var(--navy); padding:84px 32px; }
-  .handoff-grid{ position:relative; max-width:1080px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
-  .handoff-copy h2{ font-size:32px; font-weight:900; color:#fff; margin:14px 0 18px; line-height:1.3; }
-  .handoff-copy p{ font-size:16px; color:var(--blue-soft); line-height:1.65; max-width:440px; margin-bottom:20px; }
-  .handoff-copy .callout{ color:var(--orange-light); font-weight:700; font-size:17px; }
-  .phone{ background:var(--navy-deep); border-radius:34px; padding:26px 20px; max-width:340px; margin:0 auto; box-shadow:0 30px 60px rgba(0,0,0,.35); }
-  .phone-header{ text-align:center; padding-bottom:16px; }
-  .avatar{ width:44px; height:44px; border-radius:50%; background:var(--avatar-blue); color:#fff; font-size:14px; font-weight:700; display:flex; align-items:center; justify-content:center; margin:0 auto 8px; }
-  .phone-header .name{ color:#fff; font-weight:700; font-size:15px; }
-  .phone-header .meta{ color:var(--blue-mute); font-size:12px; margin-top:2px; }
-  .thread{ background:var(--navy-mid); border-radius:20px; padding:18px 16px; display:flex; flex-direction:column; gap:10px; }
-  .bubble{ max-width:82%; padding:10px 14px; border-radius:16px; font-size:14px; line-height:1.45; }
-  .bubble.them{ background:var(--candidate-bubble); color:var(--candidate-text); align-self:flex-start; border-bottom-left-radius:4px; }
-  .bubble.us{ background:var(--green); color:#06240f; align-self:flex-end; border-bottom-right-radius:4px; font-weight:500; }
-  .label-inline{ align-self:flex-end; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--blue-mute); margin:2px 6px -2px 0; }
-
   /* FINAL CTA + DEMO FORM */
   .final{ background:var(--peach); padding:90px 32px; text-align:center; }
   .final h2{ font-size:34px; font-weight:900; max-width:580px; margin:14px auto 8px; line-height:1.3; }
@@ -219,7 +202,6 @@
     .always p.sub{ margin:0 auto; }
     .lp-thread{ height:360px; }
     .how-grid{ grid-template-columns:1fr 1fr; }
-    .handoff-grid{ grid-template-columns:1fr; }
   }
   @media (max-width:560px){
     .how-grid{ grid-template-columns:1fr; }
@@ -355,34 +337,6 @@
         <div class="num" data-countup data-to="95" data-suffix="%">95%</div>
         <div class="lbl">conversation accuracy</div>
         <div class="fine">Correctly interprets what candidates mean</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 9. HUMAN + AI -->
-<section class="handoff">
-  <div class="orb" style="bottom:-80px; left:-60px; width:300px; height:300px;"></div>
-  <div class="handoff-grid">
-    <div class="handoff-copy reveal">
-      <div class="eyebrow on-dark">Humans + AI</div>
-      <h2>Ember knows what belongs with your team.</h2>
-      <p>Ember handles the repeatable recruiting work at scale. When a candidate is ready for a submission, needs human judgment, or reaches a point where a recruiter should step in, Ember surfaces the conversation with the context your team needs — right in the same thread, no group text required.</p>
-      <p class="callout">AI handles the volume. Your team handles the moments that matter.</p>
-    </div>
-    <div class="phone reveal" style="--d:150ms">
-      <div class="phone-header">
-        <div class="avatar">EC</div>
-        <div class="name">Enrolled Candidate</div>
-        <div class="meta">via Brightline Staffing · SMS</div>
-      </div>
-      <div class="thread">
-        <div class="bubble them reveal" style="--d:350ms">Great — can you let my recruiter know?</div>
-        <div class="bubble us reveal" style="--d:550ms">Got it. I've passed this to Maya to review with you. She'll text you here by 10:15 this morning. If anything comes up before then, just ask me.</div>
-        <div class="label-inline reveal" style="--d:750ms">Maya here.</div>
-        <div class="bubble us reveal" style="--d:750ms">I've got you from here. I'll text you from my own number in a minute — watch for a message from me.</div>
-        <div class="label-inline reveal" style="--d:950ms">Ember here.</div>
-        <div class="bubble us reveal" style="--d:950ms">Maya passed you back to me while they get your submission to Cleveland Clinic Main Campus in. I'll keep matches coming. Say the word if you'd rather I hold off.</div>
       </div>
     </div>
   </div>
