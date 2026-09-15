@@ -425,11 +425,24 @@
   onScroll();
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Demo form -> success
+  // Demo form -> Twenty CRM (via the ember-website Railway lead proxy), then success
+  var LEAD_ENDPOINT = 'https://ember-website-production-60dd.up.railway.app/demo-request';
   var form = document.getElementById('demo-form');
   var success = document.getElementById('demo-success');
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    try {
+      fetch(LEAD_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          agency: form.elements.agency.value,
+          name: form.elements.name.value,
+          email: form.elements.email.value
+        })
+      }).catch(function () {});
+    } catch (err) { /* the lead proxy being unreachable must never block the visitor */ }
     form.hidden = true;
     success.hidden = false;
     success.classList.add('success-pop');

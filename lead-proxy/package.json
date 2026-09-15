@@ -1,0 +1,13 @@
+{
+  "name": "ember-lead-proxy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo-request form proxy: static site POST -> Ember's Twenty CRM",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
