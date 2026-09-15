@@ -149,14 +149,15 @@
   .how-card h3{ font-family:'Inter'; font-size:15.5px; font-weight:700; margin-bottom:8px; color:var(--ink); }
   .how-card p{ font-size:13.5px; color:var(--body); line-height:1.55; }
 
-  /* DATABASE ROI (peach band, with 75% stat) */
-  .roi{ background:var(--peach); padding:76px 32px; text-align:center; }
-  .roi .wrap{ max-width:700px; }
-  .roi h2{ font-size:32px; font-weight:900; margin:14px 0 18px; }
-  .roi .stat-num{ font-family:'Merriweather',serif; font-weight:900; font-size:76px; line-height:1; color:var(--orange); margin-top:34px; }
-  .roi .stat-lbl{ font-size:15px; color:var(--body); max-width:440px; margin:10px auto 30px; line-height:1.5; }
-  .roi p.body-txt{ font-size:16.5px; color:var(--body); line-height:1.7; }
-  .roi .callout{ color:var(--orange); font-weight:700; font-size:19px; margin-top:22px; font-family:'Merriweather',serif; }
+  /* DATABASE ROI (peach stat band: giant numeral left, copy right) */
+  .roi{ background:var(--peach); border-top:1px solid #f6ddc9; border-bottom:1px solid #f6ddc9; padding:64px 32px; }
+  .roi-grid{ max-width:1010px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:center; text-align:left; }
+  .roi-stat{ text-align:center; padding-right:48px; border-right:1px solid #f0cfb4; }
+  .roi .stat-num{ font-family:'Merriweather',serif; font-weight:900; font-size:88px; line-height:.95; color:var(--orange); }
+  .roi .stat-lbl{ font-size:13.5px; color:var(--body); max-width:230px; margin:10px auto 0; line-height:1.5; }
+  .roi h2{ font-size:30px; font-weight:900; margin:12px 0 12px; letter-spacing:-.01em; }
+  .roi p.body-txt{ font-size:16px; color:var(--body); line-height:1.65; max-width:620px; }
+  .roi .callout{ color:var(--orange); font-weight:700; font-size:18px; margin-top:14px; font-family:'Merriweather',serif; }
 
   /* ACCURACY STAT */
   .accuracy{ padding:80px 32px; text-align:center; }
@@ -201,6 +202,9 @@
     .always-copy{ text-align:center; }
     .always p.sub{ margin:0 auto; }
     .lp-thread{ height:360px; }
+    .roi-grid{ grid-template-columns:1fr; gap:28px; text-align:center; }
+    .roi-stat{ padding-right:0; border-right:none; }
+    .roi p.body-txt{ margin:0 auto; }
     .how-grid{ grid-template-columns:1fr 1fr; }
   }
   @media (max-width:560px){
@@ -305,17 +309,17 @@
 
 <!-- 6. DATABASE ROI -->
 <section class="roi">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">Your biggest asset is already in your ATS</div>
-      <h2>Put your database back to work.</h2>
+  <div class="roi-grid">
+    <div class="roi-stat reveal">
+      <div class="stat-num" data-countup data-to="75" data-suffix="%">75%</div>
+      <div class="stat-lbl">of candidates take a different job than the one they applied for</div>
     </div>
     <div class="reveal" style="--d:100ms">
-      <div class="stat-num" data-countup data-to="75" data-suffix="%">75%</div>
-      <div class="stat-lbl">of candidates take a different job than the one they applied for. They're always talking to someone — the question is whether it's you.</div>
+      <div class="eyebrow">Your biggest asset is already in your ATS</div>
+      <h2>Put your database back to work.</h2>
+      <p class="body-txt">Candidates are always talking to someone. The question is whether it's you. You've already paid to acquire the people in your database, but most agencies don't have the recruiter capacity to continuously re-engage every candidate, monitor every new job and act on every relevant match. Ember Agent changes that. It continuously works the database you already own, turning dormant relationships into new submission opportunities.</p>
+      <p class="callout">More value from the candidates you've already paid for.</p>
     </div>
-    <p class="body-txt reveal" style="--d:170ms">You've already paid to acquire the candidates in your database. But most agencies don't have enough recruiter capacity to continuously re-engage every candidate, monitor every new job and act on every relevant match. Ember Agent changes that — it continuously works the database you already own, helping turn dormant relationships into new submission opportunities.</p>
-    <p class="callout reveal" style="--d:240ms">More value from the candidates you've already paid for.</p>
   </div>
 </section>
 
