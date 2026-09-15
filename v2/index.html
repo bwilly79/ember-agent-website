@@ -36,6 +36,17 @@
     --avatar-blue2:#2F5F82;
     --radius:9px;
     --ease-out:cubic-bezier(.22,1,.36,1);
+    /* Ember Agent console tokens (design_handoff_ember_agent — agent.* semantic tokens) */
+    --agent-pink:#D6409F;
+    --agent-pink-bg:#FBE9F4;
+    --agent-pink-border:#F3D3E6;
+    --agent-pink-text:#8C2A67;
+    --agent-amber:#B54708;
+    --agent-amber-bg:#FFF1E6;
+    --agent-neutral:#F1EEEB;
+    --agent-border:#EEE3DA;
+    --agent-green:#1F7A4D;
+    --agent-green-bg:#E6F4EC;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   [hidden]{display:none !important;}
@@ -149,8 +160,8 @@
   .p-panel-row{ display:flex; justify-content:space-between; font-size:12.5px; color:var(--body); padding:5px 0; border-bottom:1px solid rgba(0,0,0,.05); }
   .p-panel-row b{ color:var(--ink); }
   .p-panel-row .dot{ width:7px; height:7px; border-radius:50%; background:var(--orange); display:inline-block; margin-right:7px; }
-  .p-cand-card{ margin-top:8px; background:var(--peach); border:1px solid var(--peach-chip); border-radius:10px; padding:11px 12px; }
-  .p-tag{ font-size:10px; font-weight:700; color:var(--orange-eyebrow); background:var(--peach-chip); padding:3px 8px; border-radius:20px; }
+  .p-cand-card{ margin-top:8px; background:#fff; border:1px solid var(--agent-border); border-left:3px solid var(--orange); border-radius:10px; padding:11px 12px; }
+  .p-tag{ font-size:10px; font-weight:600; color:var(--agent-amber); background:var(--agent-amber-bg); padding:3px 10px; border-radius:999px; }
   .p-cand-card p{ font-size:11.5px; color:var(--body); margin-top:6px; }
   .p-foot{ padding:16px; border-top:1px solid rgba(0,0,0,.06); }
   .p-foot .n{ font-size:11px; font-weight:700; color:var(--orange-eyebrow); letter-spacing:.06em; }
@@ -165,15 +176,21 @@
   .c-avatar.orange{ background:var(--orange); }
   .c-head .c-name{ font-size:13.5px; font-weight:700; color:var(--ink); }
   .c-head .c-meta{ font-size:11.5px; color:var(--muted); }
-  .c-context{ margin:14px 16px 0; background:var(--peach); border-left:3px solid var(--orange); border-radius:0 8px 8px 0; padding:10px 12px; font-size:11.5px; color:var(--body); line-height:1.55; }
+  /* Conversation shots follow the Ember Agent console's bubble system verbatim:
+     candidate white/left 14-14-14-4, agent pink/right 14-14-4-14, notes centered
+     grey pills, warnings centered amber pills, pink = agent-authored only. */
+  .c-context{ margin:14px 16px 0; background:#fff; border:1px solid var(--agent-pink-border); border-left:3px solid var(--agent-pink); border-radius:0 10px 10px 0; padding:10px 12px; font-size:11.5px; color:var(--body); line-height:1.55; }
+  .cw-label{ font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--agent-pink); margin-bottom:4px; }
   .c-body{ padding:14px 16px; display:flex; flex-direction:column; gap:9px; flex:1; }
-  .c-bub{ font-size:12.5px; line-height:1.48; padding:9px 12px; border-radius:13px; max-width:92%; }
-  .c-bub.agent{ background:var(--green); color:#06240f; align-self:flex-start; border-bottom-left-radius:3px; font-weight:500; }
-  .c-bub.cand{ background:#F1F3F5; color:var(--ink); align-self:flex-end; border-bottom-right-radius:3px; }
-  .c-bub.alert{ background:var(--peach-chip); color:#7a3a00; border:1px solid #f3c9a0; align-self:flex-start; border-bottom-left-radius:3px; font-weight:500; }
-  .c-pill{ align-self:flex-start; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:20px; padding:5px 11px; font-size:10.5px; color:var(--body); }
-  .c-pill b{ color:#1f7a41; }
-  .c-label{ align-self:flex-end; font-size:10px; font-weight:700; letter-spacing:.04em; text-transform:uppercase; color:var(--muted); margin:0 4px -3px 0; }
+  .c-bub{ font-size:12.5px; line-height:1.48; padding:9px 12px; max-width:86%; }
+  .c-bub.agent{ background:var(--agent-pink-bg); color:var(--ink); align-self:flex-end; border-radius:14px 14px 4px 14px; }
+  .c-bub.cand{ background:#fff; border:1px solid var(--agent-border); color:var(--ink); align-self:flex-start; border-radius:14px 14px 14px 4px; }
+  .c-bub.alert{ background:var(--agent-amber-bg); color:var(--agent-amber); border:1px solid var(--orange-hairline, #f6ddc9); align-self:center; border-radius:999px; font-weight:600; font-size:11.5px; text-align:center; padding:5px 14px; max-width:92%; }
+  .c-pill{ align-self:center; background:var(--agent-neutral); border-radius:999px; padding:5px 14px; font-size:11px; color:var(--body); text-align:center; max-width:92%; }
+  .c-pill b{ color:inherit; }
+  .c-label{ align-self:flex-end; font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--agent-pink); margin:0 4px -3px 0; }
+  .c-avatar.zap{ background:var(--agent-pink-bg); }
+  .c-avatar.zap svg{ width:16px; height:16px; stroke:var(--agent-pink); fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
   .match-list{ align-self:flex-start; max-width:96%; width:100%; background:#fff; border:1px solid rgba(0,0,0,.08); border-radius:12px; overflow:hidden; }
   .match-row{ padding:8px 12px; border-bottom:1px solid rgba(0,0,0,.06); font-size:11px; line-height:1.4; }
   .match-row:last-child{ border-bottom:none; }
@@ -200,17 +217,6 @@
   .roi .stat-lbl{ font-size:15px; color:var(--body); max-width:440px; margin:10px auto 30px; line-height:1.5; }
   .roi p.body-txt{ font-size:16.5px; color:var(--body); line-height:1.7; }
   .roi .callout{ color:var(--orange); font-weight:700; font-size:19px; margin-top:22px; font-family:'Merriweather',serif; }
-
-  /* USE CASES */
-  .usecases{ padding:84px 32px; text-align:center; }
-  .usecases .eyebrow{ margin-bottom:14px; }
-  .usecases h2{ font-size:32px; font-weight:900; margin-bottom:52px; }
-  .uc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; max-width:1080px; margin:0 auto; text-align:left; }
-  .uc-card{ background:var(--cream-alt); border-radius:16px; padding:30px 26px; }
-  .uc-card .circ{ width:46px; height:46px; border-radius:50%; background:var(--peach-chip); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
-  .uc-card .circ svg{ stroke:var(--orange-eyebrow); }
-  .uc-card h3{ font-family:'Inter'; font-size:16px; font-weight:700; margin-bottom:8px; color:var(--ink); }
-  .uc-card p{ font-size:14px; color:var(--body); line-height:1.6; }
 
   /* ACCURACY STAT */
   .accuracy{ padding:80px 32px; text-align:center; }
@@ -240,16 +246,6 @@
   .bubble.them{ background:var(--candidate-bubble); color:var(--candidate-text); align-self:flex-start; border-bottom-left-radius:4px; }
   .bubble.us{ background:var(--green); color:#06240f; align-self:flex-end; border-bottom-right-radius:4px; font-weight:500; }
   .label-inline{ align-self:flex-end; font-size:11px; font-weight:700; letter-spacing:.03em; text-transform:uppercase; color:var(--blue-mute); margin:2px 6px -2px 0; }
-
-  /* CONTROL / TRUST */
-  .trust{ padding:84px 32px; text-align:center; }
-  .trust h2{ font-size:32px; font-weight:900; margin:14px 0 48px; }
-  .trust-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; max-width:1080px; margin:0 auto; text-align:left; }
-  .trust-card{ background:var(--cream-alt); border-radius:16px; padding:26px 22px; }
-  .trust-card .circ{ width:40px; height:40px; border-radius:50%; background:var(--peach-chip); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
-  .trust-card .circ svg{ width:18px; height:18px; stroke:var(--orange-eyebrow); }
-  .trust-card h3{ font-family:'Inter'; font-size:15px; font-weight:700; margin-bottom:8px; }
-  .trust-card p{ font-size:13.5px; color:var(--body); line-height:1.55; }
 
   /* FINAL CTA + DEMO FORM */
   .final{ background:var(--peach); padding:90px 32px; text-align:center; }
@@ -283,11 +279,10 @@
     .evo-steps{ grid-template-columns:1fr; }
     .convo-grid5, .convo-grid2{ grid-template-columns:1fr; }
     .how-grid{ grid-template-columns:1fr 1fr; }
-    .uc-grid, .trust-grid{ grid-template-columns:1fr 1fr; }
     .handoff-grid{ grid-template-columns:1fr; }
   }
   @media (max-width:560px){
-    .how-grid, .uc-grid, .trust-grid{ grid-template-columns:1fr; }
+    .how-grid{ grid-template-columns:1fr; }
     .demo-form{ grid-template-columns:1fr; }
     .demo-input.full, .demo-form .btn{ grid-column:auto; }
   }
@@ -316,7 +311,7 @@
   <div class="wrap">
     <div class="eyebrow reveal">Ember Hiring presents</div>
     <h1 class="reveal" style="--d:70ms">Ember Agent.<span class="warm">Your New Digital Employee.</span></h1>
-    <p class="lead reveal" style="--d:140ms">An always-on recruiting agent built to continuously work your database — keeping candidates engaged, matching them to opportunities and surfacing submission-ready talent to your team.</p>
+    <p class="lead reveal" style="--d:140ms">An always on healthcare recruiting agent built to continuously work your database, keeping candidates engaged, matching them to opportunities and surfacing submission-ready talent to your team.</p>
     <div class="cta reveal" style="--d:210ms"><a href="#evolution" class="btn">Meet Your Ember Agent →</a></div>
   </div>
 </section>
@@ -415,6 +410,7 @@
         <div class="c-body">
           <div class="c-bub cand reveal" style="--d:200ms">Can you prioritize my matches on highest pay for the lowest cost of living? I'm open, and I have a compact license.</div>
           <div class="c-pill reveal" style="--d:380ms"><b>✓</b> Preferences updated — pay-to-cost-of-living over absolute pay</div>
+          <div class="c-label reveal" style="--d:560ms">Ember</div>
           <div class="c-bub agent reveal" style="--d:560ms">Based on that, here are your best matches:</div>
           <div class="match-list reveal" style="--d:740ms">
             <div class="match-row"><div class="loc">MS/Tele · Mayfield Heights, OH</div><div class="meta"><span class="pay">$2,375/wk</span> · 36 hrs · Nights · starts 9/14</div></div>
@@ -427,8 +423,9 @@
       </div>
 
       <div class="c-card reveal" style="--d:100ms">
-        <div class="c-head"><div class="c-avatar orange">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">9 yrs 3 mo · CST · via Brightline</div></div></div>
+        <div class="c-head"><div class="c-avatar" style="background:var(--avatar-blue);">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">9 yrs 3 mo · CST · via Brightline</div></div></div>
         <div class="c-body">
+          <div class="c-label reveal" style="--d:300ms">Ember</div>
           <div class="c-bub agent reveal" style="--d:300ms">Here's what's currently open that fits:</div>
           <div class="match-list reveal" style="--d:480ms">
             <div class="match-row"><div class="loc">Surgical Tech · Glenwood Springs, CO</div><div class="meta"><span class="pay">$2,656/wk</span> · 40 hrs · Days · starts 10/6</div></div>
@@ -442,7 +439,7 @@
       </div>
 
       <div class="c-card reveal" style="--d:200ms">
-        <div class="c-head"><div class="c-avatar" style="background:var(--orange);">⚡</div><div><div class="c-name">What's happening</div><div class="c-meta">All candidates</div></div></div>
+        <div class="c-head"><div class="c-avatar zap"><svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div><div class="c-name">What's happening</div><div class="c-meta">All candidates</div></div></div>
         <div class="p-body" style="min-height:auto; padding:14px 16px;">
           <div class="p-panel-row reveal" style="--d:400ms"><span><span class="dot"></span>Requires attention</span><b>3</b></div>
           <div class="p-panel-row reveal" style="--d:520ms"><span><span class="dot" style="background:#adb5bd;"></span>New interest</span><b>12</b></div>
@@ -461,10 +458,11 @@
     <div class="convo-grid2">
 
       <div class="c-card reveal">
-        <div class="c-head"><div class="c-avatar orange">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">Re-engagement · Owner: you</div></div></div>
-        <div class="c-context">Re-engagement campaign. Candidate needs an early November start — Ember updated his file, sent the two closest matches, then asked whether a facility would flex its 10/19 date.</div>
+        <div class="c-head"><div class="c-avatar" style="background:var(--avatar-blue);">OR</div><div><div class="c-name">OR Candidate</div><div class="c-meta">Re-engagement · Owner: you</div></div></div>
+        <div class="c-context"><div class="cw-label">What's happening</div>Re-engagement campaign. Candidate needs an early November start — Ember updated his file, sent the two closest matches, then asked whether a facility would flex its 10/19 date.</div>
         <div class="c-body">
           <div class="c-bub cand reveal" style="--d:200ms">Will Sitka accept a later start date?</div>
+          <div class="c-label reveal" style="--d:380ms">Ember</div>
           <div class="c-bub agent reveal" style="--d:380ms">I can't confirm that's flexible. I've passed this to Nathan to check with the facility — he'll text you here by 12:14 this afternoon.</div>
           <div class="c-bub cand reveal" style="--d:560ms">Perfect</div>
           <div class="c-bub alert reveal" style="--d:740ms">Nathan hasn't gotten back to you yet, so I've flagged this to leadership. Someone will be in touch shortly.</div>
@@ -474,8 +472,9 @@
 
       <div class="c-card reveal" style="--d:100ms">
         <div class="c-head"><div class="c-avatar">LTC</div><div><div class="c-name">LTC Candidate</div><div class="c-meta">7 yrs 5 mo · LPN, MN · via Brightline</div></div></div>
-        <div class="c-context">Recruiter enrollment sequence. Ember sent one match and she said yes — then flagged it to her recruiter, Nicole, when Nicole didn't reply in time.</div>
+        <div class="c-context"><div class="cw-label">What's happening</div>Recruiter enrollment sequence. Ember sent one match and she said yes — then flagged it to her recruiter, Nicole, when Nicole didn't reply in time.</div>
         <div class="c-body">
+          <div class="c-label reveal" style="--d:300ms">Ember</div>
           <div class="c-bub agent reveal" style="--d:300ms">Found a match for you:</div>
           <div class="match-list reveal" style="--d:480ms">
             <div class="match-row"><div class="loc">LTC · Roseau, MN</div><div class="meta"><span class="pay">$1,518/wk</span> · 32 hrs · 2:30–10:30 PM</div></div>
@@ -543,33 +542,6 @@
   </div>
 </section>
 
-<!-- 7. USE CASES -->
-<section class="usecases">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">One agent. Always working.</div>
-      <h2>Three ways Ember puts your database to work.</h2>
-    </div>
-    <div class="uc-grid">
-      <div class="uc-card reveal">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>Re-engage dormant candidates</h3>
-        <p>Reconnect with candidates already in your database when relevant opportunities appear.</p>
-      </div>
-      <div class="uc-card reveal" style="--d:80ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <h3>Work new applicants faster</h3>
-        <p>Start engaging new candidates while interest is fresh.</p>
-      </div>
-      <div class="uc-card reveal" style="--d:160ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24" style="width:20px;height:20px;"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <h3>Continuously act on job matches</h3>
-        <p>When the right job appears for the right candidate, Ember moves the conversation forward without waiting for a recruiter to notice it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- 8. ACCURACY -->
 <section class="accuracy">
   <div class="wrap">
@@ -615,38 +587,6 @@
         <div class="bubble us reveal" style="--d:750ms">I've got you from here. I'll text you from my own number in a minute — watch for a message from me.</div>
         <div class="label-inline reveal" style="--d:950ms">Ember here.</div>
         <div class="bubble us reveal" style="--d:950ms">Maya passed you back to me while they get your submission to Cleveland Clinic Main Campus in. I'll keep matches coming. Say the word if you'd rather I hold off.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 10. CONTROL -->
-<section class="trust">
-  <div class="wrap">
-    <div class="reveal">
-      <div class="eyebrow">Your team is still in control</div>
-      <h2>Your digital employee works for you.</h2>
-    </div>
-    <div class="trust-grid">
-      <div class="trust-card reveal">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a6.5 6.5 0 0 1 13 0"/></svg></div>
-        <h3>You control who Ember works with</h3>
-        <p>Your team determines which candidates and lists the Agent can engage.</p>
-      </div>
-      <div class="trust-card reveal" style="--d:70ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <h3>You can see the work</h3>
-        <p>Get visibility into every conversation and what's happening with each candidate.</p>
-      </div>
-      <div class="trust-card reveal" style="--d:140ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
-        <h3>Humans can step in</h3>
-        <p>When judgment or a human relationship is needed, your team takes over — right in the thread.</p>
-      </div>
-      <div class="trust-card reveal" style="--d:210ms">
-        <div class="circ"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="10" y1="9" x2="10" y2="15"/><line x1="14" y1="9" x2="14" y2="15"/></svg></div>
-        <h3>You can stop it</h3>
-        <p>Your team retains full control over Agent activity, any time.</p>
       </div>
     </div>
   </div>
