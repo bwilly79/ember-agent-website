@@ -117,7 +117,7 @@ const server = http.createServer(async (req, res) => {
       const name = String(body.name || "").trim().slice(0, 200);
       const email = String(body.email || "").trim().slice(0, 320);
       const ats = String(body.ats || "").trim().slice(0, 120);
-      if (!agency || !name || !/.+@.+\..+/.test(email)) {
+      if (!agency || !ats || !/\S+\s+\S+/.test(name) || !/^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(email)) {
         return send(res, 400, cors, { ok: false, error: "missing or invalid fields" });
       }
       await createLead({ agency, name, email, ats });
