@@ -149,27 +149,39 @@
   .how-card h3{ font-family:'Inter'; font-size:15.5px; font-weight:700; margin-bottom:8px; color:var(--ink); }
   .how-card p{ font-size:13.5px; color:var(--body); line-height:1.55; }
 
-  /* DATABASE ROI (peach stat band: giant numeral left, copy right) */
-  .roi{ background:var(--peach); border-top:1px solid #f6ddc9; border-bottom:1px solid #f6ddc9; padding:64px 32px; }
-  .roi-grid{ max-width:1010px; margin:0 auto; display:grid; grid-template-columns:auto 1fr; gap:48px; align-items:center; text-align:left; }
-  .roi-stat{ text-align:center; padding-right:48px; border-right:1px solid #f0cfb4; }
-  .roi .stat-num{ font-family:'Merriweather',serif; font-weight:900; font-size:88px; line-height:.95; color:var(--orange); }
-  .roi .stat-lbl{ font-size:13.5px; color:var(--body); max-width:230px; margin:10px auto 0; line-height:1.5; }
-  .roi h2{ font-size:30px; font-weight:900; margin:12px 0 12px; letter-spacing:-.01em; }
-  .roi p.body-txt{ font-size:16px; color:var(--body); line-height:1.65; max-width:620px; }
-  .roi .callout{ color:var(--orange); font-weight:700; font-size:18px; margin-top:14px; font-family:'Merriweather',serif; }
+  /* PROOF (unified stat band: three alternating image/copy rows) */
+  .proof{ background:var(--peach); border-top:1px solid #f6ddc9; border-bottom:1px solid #f6ddc9; padding:76px 32px 84px; }
+  .proof-intro{ max-width:640px; margin:0 auto 64px; text-align:center; }
+  .proof-intro h2{ font-size:32px; font-weight:900; margin:14px 0 0; letter-spacing:-.01em; }
+  .proof-row{ max-width:1010px; margin:0 auto; display:grid; grid-template-columns:280px 1fr; gap:56px; align-items:center; }
+  .proof-row + .proof-row{ margin-top:72px; }
+  .proof-row.reverse{ grid-template-columns:1fr 280px; }
+  .proof-row.reverse .proof-media{ order:2; }
+  .proof-row.reverse .proof-copy{ order:1; }
+  .proof-media{
+    width:280px; height:280px; border-radius:50%;
+    background:var(--cream); border:1.5px solid var(--peach-chip);
+    box-shadow:0 18px 40px -22px rgba(13,34,56,.18);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    margin:0 auto; padding:20px; text-align:center;
+  }
+  .proof-media svg{ width:38px; height:38px; stroke:var(--orange); stroke-width:1.6; fill:none; stroke-linecap:round; stroke-linejoin:round; margin-bottom:10px; }
+  .proof-media .num{ font-family:'Merriweather',serif; font-weight:900; font-size:34px; color:var(--orange); line-height:1; }
+  .proof-media .lbl{ font-size:13px; color:var(--body); margin-top:6px; max-width:170px; }
+  .proof-media .fine{ font-size:11px; color:var(--muted); margin-top:6px; }
+  .proof-copy h3{ font-size:26px; font-weight:900; margin:10px 0 12px; letter-spacing:-.01em; }
+  .proof-copy p.body-txt{ font-size:15.5px; color:var(--body); line-height:1.65; max-width:560px; }
+  .proof-row.reverse .proof-copy p.body-txt{ margin-left:auto; }
+  .proof-copy .callout{ color:var(--orange); font-weight:700; font-size:17px; margin-top:14px; font-family:'Merriweather',serif; }
 
-  /* ACCURACY STAT */
-  .accuracy{ padding:80px 32px; text-align:center; }
-  .accuracy .wrap{ max-width:620px; }
-  .accuracy h2{ font-size:30px; font-weight:900; margin:14px 0 16px; }
-  .accuracy p.body-txt{ font-size:15.5px; color:var(--body); line-height:1.65; margin-bottom:44px; }
-  .ring{ width:200px; height:200px; border-radius:50%; border:1.5px solid var(--peach-chip); background:var(--peach); display:flex; flex-direction:column; align-items:center; justify-content:center; margin:0 auto; }
-  .ring .num{ font-family:'Merriweather',serif; font-weight:900; font-size:30px; color:var(--orange); }
-  .ring .lbl{ font-size:13px; color:var(--body); margin-top:4px; }
-  .ring .fine{ font-size:11px; color:var(--muted); margin-top:6px; }
-  .ring-row{ display:flex; gap:28px; justify-content:center; flex-wrap:wrap; }
-  @media (max-width:560px){ .ring-row{ gap:20px; } .ring{ width:170px; height:170px; } }
+  @media (max-width:860px){
+    .proof-row, .proof-row.reverse{ grid-template-columns:1fr; text-align:center; gap:28px; }
+    .proof-row.reverse .proof-media, .proof-row.reverse .proof-copy{ order:initial; }
+    .proof-copy p.body-txt, .proof-row.reverse .proof-copy p.body-txt{ margin:0 auto; }
+  }
+  @media (max-width:560px){
+    .proof-media{ width:210px; height:210px; }
+  }
 
   /* FINAL CTA + DEMO FORM */
   .final{ background:var(--peach); padding:90px 32px; text-align:center; }
@@ -202,9 +214,6 @@
     .always-copy{ text-align:center; }
     .always p.sub{ margin:0 auto; }
     .lp-thread{ height:360px; }
-    .roi-grid{ grid-template-columns:1fr; gap:28px; text-align:center; }
-    .roi-stat{ padding-right:0; border-right:none; }
-    .roi p.body-txt{ margin:0 auto; }
     .how-grid{ grid-template-columns:1fr 1fr; }
   }
   @media (max-width:560px){
@@ -307,41 +316,52 @@
   </div>
 </section>
 
-<!-- 6. DATABASE ROI -->
-<section class="roi">
-  <div class="roi-grid">
-    <div class="roi-stat reveal">
-      <div class="stat-num" data-countup data-to="75" data-suffix="%">75%</div>
-      <div class="stat-lbl">of candidates take a different job than the one they applied for</div>
+<!-- 6+8. PROOF (database ROI + accuracy, unified into one flowing stat section) -->
+<section class="proof">
+  <div class="proof-intro reveal">
+    <div class="eyebrow center">Proven at scale</div>
+    <h2>The numbers behind every match.</h2>
+  </div>
+
+  <div class="proof-row reveal">
+    <div class="proof-media">
+      <svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>
+      <div class="num" data-countup data-to="75" data-suffix="%">75%</div>
+      <div class="lbl">take a different job than the one they applied for</div>
     </div>
-    <div class="reveal" style="--d:100ms">
+    <div class="proof-copy">
       <div class="eyebrow">Your biggest asset is already in your ATS</div>
-      <h2>Put your database back to work.</h2>
+      <h3>Put your database back to work.</h3>
       <p class="body-txt">Candidates are always talking to someone. The question is whether it's you. You've already paid to acquire the people in your database, but most agencies don't have the recruiter capacity to continuously re-engage every candidate, monitor every new job and act on every relevant match. Ember Agent changes that. It continuously works the database you already own, turning dormant relationships into new submission opportunities.</p>
       <p class="callout">More value from the candidates you've already paid for.</p>
     </div>
   </div>
-</section>
 
-<!-- 8. ACCURACY -->
-<section class="accuracy">
-  <div class="wrap">
-    <div class="reveal">
+  <div class="proof-row reverse reveal" style="--d:100ms">
+    <div class="proof-copy">
       <div class="eyebrow">Built for healthcare staffing</div>
-      <h2>Accuracy matters when every match is different.</h2>
-      <p class="body-txt">Generic AI doesn't understand the nuance of healthcare staffing, or reliably understand what a candidate is actually telling you. Ember was built and trained around the data and context that actually drive placements: specialty, licensing, shift, location, pay, availability, and real conversation.</p>
+      <h3>Matching that understands healthcare.</h3>
+      <p class="body-txt">Generic AI doesn't understand the nuance of healthcare staffing, or reliably understand what a candidate is actually telling you. Ember was built and trained around the data and context that actually drive placements: specialty, licensing, shift, location, pay, and availability.</p>
     </div>
-    <div class="ring-row">
-      <div class="ring reveal" style="--d:100ms">
-        <div class="num" data-countup data-to="99" data-prefix="Up to " data-suffix="%">Up to 99%</div>
-        <div class="lbl">matching accuracy</div>
-        <div class="fine">Based on internal testing</div>
-      </div>
-      <div class="ring reveal" style="--d:200ms">
-        <div class="num" data-countup data-to="95" data-suffix="%">95%</div>
-        <div class="lbl">conversation accuracy</div>
-        <div class="fine">Correctly interprets what candidates mean</div>
-      </div>
+    <div class="proof-media">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="var(--orange)"/></svg>
+      <div class="num" data-countup data-to="99" data-prefix="Up to " data-suffix="%">Up to 99%</div>
+      <div class="lbl">matching accuracy</div>
+      <div class="fine">Based on internal testing</div>
+    </div>
+  </div>
+
+  <div class="proof-row reveal" style="--d:200ms">
+    <div class="proof-media">
+      <svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="m8.5 10 2.5 2.5L16 7.5"/></svg>
+      <div class="num" data-countup data-to="95" data-suffix="%">95%</div>
+      <div class="lbl">conversation accuracy</div>
+      <div class="fine">Correctly interprets what candidates mean</div>
+    </div>
+    <div class="proof-copy">
+      <div class="eyebrow">Real conversation, correctly understood</div>
+      <h3>Not just chat. Comprehension.</h3>
+      <p class="body-txt">Candidates rarely answer in neat categories. Ember reads real, messy conversation, an offhand comment about a commute, a hesitation about pay, and correctly interprets what it means for the match, so nothing gets lost in translation between a candidate and your team.</p>
     </div>
   </div>
 </section>
