@@ -54,10 +54,12 @@ async function twenty(path, payload) {
   return d?.id ?? Object.values(d || {}).find((v) => v && typeof v === "object" && v.id)?.id ?? null;
 }
 
-async function createLead({ agency, name, email }) {
+async function createLead({ agency, name, email, ats }) {
   let companyId = null;
   try {
-    companyId = await twenty("/rest/companies", { name: agency });
+    const company = { name: agency };
+    if (ats) company.ats = ats;
+    companyId = await twenty("/rest/companies", company);
   } catch (err) {
     // A duplicate or validation failure on the company must not lose the lead.
     console.error("company create failed:", err.message);
@@ -68,6 +70,7 @@ async function createLead({ agency, name, email }) {
   const person = {
     name: { firstName, lastName },
     emails: { primaryEmail: email },
+    source: "Website demo form",
   };
   if (companyId) person.companyId = companyId;
   await twenty("/rest/people", person);
@@ -113,10 +116,11 @@ const server = http.createServer(async (req, res) => {
       const agency = String(body.agency || "").trim().slice(0, 200);
       const name = String(body.name || "").trim().slice(0, 200);
       const email = String(body.email || "").trim().slice(0, 320);
+      const ats = String(body.ats || "").trim().slice(0, 120);
       if (!agency || !name || !/.+@.+\..+/.test(email)) {
         return send(res, 400, cors, { ok: false, error: "missing or invalid fields" });
       }
-      await createLead({ agency, name, email });
+      await createLead({ agency, name, email, ats });
       console.log(`lead created: ${name} <${email}> (${agency})`);
       return send(res, 200, cors, { ok: true });
     } catch (err) {

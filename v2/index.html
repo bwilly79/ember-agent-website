@@ -355,6 +355,7 @@
       <input required name="agency" placeholder="Agency name" class="demo-input full">
       <input required name="name" placeholder="Your name" class="demo-input">
       <input required type="email" name="email" placeholder="Work email" class="demo-input">
+      <input name="ats" placeholder="Your ATS (Bullhorn, LaborEdge...)" class="demo-input full">
       <button type="submit" class="btn" style="font-size:16px; padding:16px;">Book my demo</button>
     </form>
     <div id="demo-success" hidden class="demo-success">
@@ -426,7 +427,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
 
   // Demo form -> Twenty CRM (via the ember-website Railway lead proxy), then success
-  var LEAD_ENDPOINT = 'https://ember-website-production-60dd.up.railway.app/demo-request';
+  var LEAD_ENDPOINT = 'https://ember-site.up.railway.app/demo-request';
   var form = document.getElementById('demo-form');
   var success = document.getElementById('demo-success');
   form.addEventListener('submit', function (e) {
@@ -439,7 +440,8 @@
         body: JSON.stringify({
           agency: form.elements.agency.value,
           name: form.elements.name.value,
-          email: form.elements.email.value
+          email: form.elements.email.value,
+          ats: form.elements.ats.value
         })
       }).catch(function () {});
     } catch (err) { /* the lead proxy being unreachable must never block the visitor */ }
