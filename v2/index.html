@@ -174,7 +174,8 @@
 
   @media (max-width:860px){
     .proof-row, .proof-row.reverse{ grid-template-columns:1fr; text-align:center; gap:28px; }
-    .proof-row.reverse .proof-media, .proof-row.reverse .proof-copy{ order:initial; }
+    .proof-row.reverse .proof-media{ order:-1; }
+    .proof-row.reverse .proof-copy{ order:initial; }
     .proof-copy p.body-txt, .proof-row.reverse .proof-copy p.body-txt{ margin:0 auto; }
   }
   @media (max-width:560px){
