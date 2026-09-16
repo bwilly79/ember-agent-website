@@ -353,9 +353,10 @@
     <h2 class="reveal" style="--d:70ms">Your database already has the talent. Ember Agent puts it to work.</h2>
     <form id="demo-form" class="demo-form reveal" style="--d:140ms">
       <input required name="agency" placeholder="Agency name" class="demo-input full">
-      <input required name="name" placeholder="First and last name" class="demo-input">
+      <input required name="firstName" placeholder="First name" class="demo-input">
+      <input required name="lastName" placeholder="Last name" class="demo-input">
       <input required type="email" name="email" placeholder="Work email" pattern="[^@\s]+@[^@\s]+\.[^@\s]{2,}" title="Enter a valid work email" class="demo-input">
-      <input required name="ats" placeholder="Your ATS (Bullhorn, LaborEdge...)" class="demo-input full">
+      <input required name="ats" placeholder="Your ATS (Bullhorn, LaborEdge...)" class="demo-input">
       <button type="submit" class="btn" style="font-size:16px; padding:16px;">Book my demo</button>
     </form>
     <div id="demo-success" hidden class="demo-success">
@@ -430,15 +431,8 @@
   var LEAD_ENDPOINT = 'https://ember-site.up.railway.app/demo-request';
   var form = document.getElementById('demo-form');
   var success = document.getElementById('demo-success');
-  var nameField = form.elements.name;
-  nameField.addEventListener('input', function () { nameField.setCustomValidity(''); });
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!/\S+\s+\S+/.test(nameField.value.trim())) {
-      nameField.setCustomValidity('Enter your first and last name');
-      nameField.reportValidity();
-      return;
-    }
     try {
       fetch(LEAD_ENDPOINT, {
         method: 'POST',
@@ -446,7 +440,7 @@
         keepalive: true,
         body: JSON.stringify({
           agency: form.elements.agency.value,
-          name: form.elements.name.value,
+          name: form.elements.firstName.value.trim() + ' ' + form.elements.lastName.value.trim(),
           email: form.elements.email.value,
           ats: form.elements.ats.value
         })
